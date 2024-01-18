@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "848935089947",
+    "project_id": "store1-1642c",
+    "storage_bucket": "store1-1642c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848935089947:android:05d65d838622bff0d985be",
+        "android_client_info": {
+          "package_name": "com.g247.blazebazzar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGo-BSooGos3S97TSy-uGg7UogBUKgFbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
