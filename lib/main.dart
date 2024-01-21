@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:blazebazzar/views/buyers/authentication/login_screen.dart';
+import 'package:blazebazzar/views/buyers/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'config/app_ui.dart';
 import 'config/app_theme.dart';
@@ -26,9 +27,9 @@ class MyApp extends StatelessWidget {
       title: 'BlazeBazzar',
       debugShowCheckedModeBanner: false,
       theme: CustomLightTheme(),
-      darkTheme: CustomDarkTheme(),
-      themeMode: ThemeMode.system,
-      home: LoginScreen(),
+      // darkTheme: CustomDarkTheme(),
+      // themeMode: ThemeMode.system,
+      home: MainScreen(),
     );
   }
 }

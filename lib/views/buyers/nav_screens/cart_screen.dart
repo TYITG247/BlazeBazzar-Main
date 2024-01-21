@@ -10,8 +10,41 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Cart Screen"),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Your Shopping Cart is Empty",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2
+              ),
+            ),
+            Gap(15),
+            Container(
+              height: 40,
+              width: MediaQuery.of(context).size.width - 40,
+              decoration: BoxDecoration(
+                color: FlexColor.mandyRedLightPrimary,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Center(
+                child: Text(
+                  "Continue Shopping",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    letterSpacing: 2,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
