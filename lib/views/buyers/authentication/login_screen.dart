@@ -51,115 +51,145 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Welcome back, Customer's",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextFormField(
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Email cannot be Empty";
-                    } else {
-                      return RegExp(
-                                  r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-                              .hasMatch(value)
-                          ? null
-                          : "Enter a valid Email.";
-                    }
-                  },
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  decoration: InputDecoration(
-                    labelText: "Enter E-mail Address",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextFormField(
-                  obscureText: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Password cannot be Empty";
-                    } else {
-                      return RegExp(
-                                  r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$')
-                              .hasMatch(value)
-                          ? null
-                          : "Enter a valid Password.";
-                    }
-                  },
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  decoration: InputDecoration(
-                    labelText: "Enter Password",
-                  ),
-                ),
-              ),
-              Gap(20),
-              InkWell(
-                onTap: () {
-                  _loginUser();
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: 50,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 220,
+                  width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: FlexColor.mandyRedLightPrimary,
-                    borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Center(
-                    child: _isLoading
-                        ? CircularProgressIndicator(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Gap(50),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 10,),
+                        child: Text(
+                          "Sign in to your Account",
+                          style: TextStyle(
                             color: Colors.white,
-                          )
-                        : Text(
-                            "Log In",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 5),
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
                           ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10,),
+                        child: Text(
+                          "Sign in to your Account",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Need an account?,",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  CupertinoButton(
-                    child: Text("Register"),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return RegisterScreen();
-                          },
-                        ),
-                      );
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 8, right: 20, bottom: 8),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Email cannot be Empty";
+                      } else {
+                        return RegExp(
+                                    r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                                .hasMatch(value)
+                            ? null
+                            : "Enter a valid Email.";
+                      }
                     },
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Enter E-mail Address",
+                    ),
                   ),
-                ],
-              ),
-            ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 8, right: 20, bottom: 8),
+                  child: TextFormField(
+                    obscureText: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Password cannot be Empty";
+                      } else {
+                        return RegExp(
+                                    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$')
+                                .hasMatch(value)
+                            ? null
+                            : "Enter a valid Password.";
+                      }
+                    },
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Enter Password",
+                    ),
+                  ),
+                ),
+                Gap(20),
+                InkWell(
+                  onTap: () {
+                    _loginUser();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: FlexColor.mandyRedLightPrimary,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              "Log In",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 5),
+                            ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Need an account?,",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    CupertinoButton(
+                      child: Text("Register"),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return RegisterScreen();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
