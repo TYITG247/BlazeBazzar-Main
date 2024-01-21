@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:blazebazzar/views/buyers/authentication/register_screen.dart';
 import 'package:blazebazzar/views/buyers/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: CustomLightTheme(),
       darkTheme: CustomDarkTheme(),
       themeMode: ThemeMode.system,
-      home: const MainScreen(),
+      home: const RegisterScreen(),
     );
   }
 }
