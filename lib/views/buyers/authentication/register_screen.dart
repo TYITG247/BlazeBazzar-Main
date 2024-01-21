@@ -1,11 +1,8 @@
-import 'package:blazebazzar/config/app_theme.dart';
 import 'package:blazebazzar/controllers/authentication_controller.dart';
 import 'package:blazebazzar/utils/show_snackbar.dart';
 import 'package:blazebazzar/views/buyers/authentication/login_screen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:gap/gap.dart';
+import 'package:blazebazzar/config/app_ui.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

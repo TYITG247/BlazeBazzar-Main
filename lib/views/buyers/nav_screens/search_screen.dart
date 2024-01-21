@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:blazebazzar/config/app_ui.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

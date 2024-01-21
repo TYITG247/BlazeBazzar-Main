@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:blazebazzar/config/app_ui.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});

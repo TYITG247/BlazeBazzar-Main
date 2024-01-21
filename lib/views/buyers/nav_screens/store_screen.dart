@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:blazebazzar/config/app_ui.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});

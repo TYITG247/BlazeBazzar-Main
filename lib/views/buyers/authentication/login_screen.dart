@@ -1,8 +1,6 @@
 import 'package:blazebazzar/views/buyers/authentication/register_screen.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:blazebazzar/config/app_ui.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

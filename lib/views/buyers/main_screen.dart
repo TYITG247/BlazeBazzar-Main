@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import '../../config/app_ui.dart';
 import '../../config/app_theme.dart';
 import 'nav_screens/account_screen.dart';
 import 'nav_screens/cart_screen.dart';

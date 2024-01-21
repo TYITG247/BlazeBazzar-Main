@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:blazebazzar/config/app_ui.dart';
 
 class BannerWidget extends StatefulWidget {
   @override
@@ -37,7 +36,7 @@ class _BannerWidgetState extends State<BannerWidget> {
       height: 200,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Colors.amberAccent.shade700,
+        color: FlexColor.mandyRedLightPrimaryContainer,
         borderRadius: BorderRadius.circular(15),
       ),
       child: PageView.builder(

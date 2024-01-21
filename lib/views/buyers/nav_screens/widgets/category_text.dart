@@ -1,6 +1,5 @@
 import 'package:blazebazzar/config/app_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:blazebazzar/config/app_ui.dart';
 
 class CategoryText extends StatelessWidget {
   final List<String> _categorylabel = ["Food", "Vegetable", "Egg", "Tea"];
