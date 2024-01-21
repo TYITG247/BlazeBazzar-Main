@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blazebazzar/config/app_ui.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
 class BannerWidget extends StatefulWidget {
   @override
@@ -44,8 +46,21 @@ class _BannerWidgetState extends State<BannerWidget> {
         itemBuilder: (context, index) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              _bannerImage[index],
+            child: CachedNetworkImage(
+              imageUrl: _bannerImage[index],
+              placeholder: (context, url) => Shimmer(
+                duration: Duration(seconds: 3),
+                interval:
+                    Duration(seconds: 5),
+                color: FlexColor.mandyRedLightPrimary,
+                colorOpacity: 0,
+                enabled: true,
+                direction: ShimmerDirection.fromLTRB(), //Default Value
+                child: Container(
+                  color: Colors.white,
+                ),
+              ),
+              errorWidget: (context, url, error) => Icon(Icons.error),
               fit: BoxFit.cover,
             ),
           );
