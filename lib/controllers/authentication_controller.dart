@@ -32,7 +32,24 @@ class AuthenticationController {
       } else {
         res = "Please Fields must not be empty";
       }
-    } catch (e) {}
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
+
+  loginUsers(String email, String password) async {
+    String res = "Some Error";
+    try{
+      if(email.isNotEmpty && password.isNotEmpty){
+        await _auth.signInWithEmailAndPassword(email: email, password: password);
+        res = "Successful";
+      } else {
+        res = "Fields cannot be Empty";
+      }
+    }catch(e){
+      res = e.toString();
+    }
     return res;
   }
 }

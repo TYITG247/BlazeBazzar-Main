@@ -23,8 +23,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   late String password;
 
-  late String cPassword;
-
   bool _isLoading = false;
 
   _registerUser() async {
@@ -33,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
     if (_formkey.currentState!.validate()) {
       await _authenticationController
-          .registerUsers(email, fullName, phoneNumber, cPassword)
+          .registerUsers(email, fullName, phoneNumber, password)
           .whenComplete(() {
         setState(() {
           _formkey.currentState!.reset();
@@ -86,7 +84,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (value!.isEmpty) {
                         return "Email cannot be Empty";
                       } else {
-                        return null;
+                        return RegExp(
+                                    r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                                .hasMatch(value)
+                            ? null
+                            : "Enter a valid Email.";
                       }
                     },
                     decoration: InputDecoration(
@@ -105,7 +107,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (value!.isEmpty) {
                         return "Name cannot be Empty";
                       } else {
-                        return null;
+                        return RegExp(r'^[a-zA-Z]+(?:\s+[a-zA-Z]+)*$')
+                                .hasMatch(value)
+                            ? null
+                            : "Enter a valid Name.";
                       }
                     },
                     decoration: InputDecoration(
@@ -124,7 +129,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (value!.isEmpty) {
                         return "Phone Number cannot be Empty";
                       } else {
-                        return null;
+                        return RegExp(r'^[0-9]{10}$').hasMatch(value)
+                            ? null
+                            : "Enter a valid Phone Number.";
                       }
                     },
                     decoration: InputDecoration(
@@ -144,31 +151,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (value!.isEmpty) {
                         return "Password cannot be Empty";
                       } else {
-                        return null;
+                        return RegExp(
+                                    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$')
+                                .hasMatch(value)
+                            ? null
+                            : "Enter a valid Password.";
                       }
                     },
                     decoration: InputDecoration(
                       labelText: "Password",
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, top: 8, right: 20, bottom: 8),
-                  child: TextFormField(
-                    obscureText: true,
-                    onChanged: (value) {
-                      cPassword = password;
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Confirm Password cannot be Empty";
-                      } else {
-                        return null;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Confirm Password",
                     ),
                   ),
                 ),
