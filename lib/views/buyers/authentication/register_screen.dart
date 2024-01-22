@@ -61,15 +61,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Container(
                   height: 180,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: FlexColor.mandyRedLightPrimary,
                   ),
-                  child: Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Gap(50),
                       Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 10,),
+                        padding: EdgeInsets.only(left: 10, top: 10,),
                         child: Text(
                           "Register",
                           style: TextStyle(
@@ -80,7 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 10,),
+                        padding: EdgeInsets.only(left: 10,),
                         child: Text(
                           "Create your Account",
                           style: TextStyle(
@@ -100,6 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onChanged: (value) {
                       email = value;
                     },
+                    keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Email cannot be Empty";
@@ -123,6 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onChanged: (value) {
                       fullName = value;
                     },
+                    keyboardType: TextInputType.name,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Name cannot be Empty";
@@ -145,6 +147,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onChanged: (value) {
                       phoneNumber = value;
                     },
+                    keyboardType: TextInputType.phone,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Phone Number cannot be Empty";
