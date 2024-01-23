@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:blazebazzar/seller/views/screens/main_seller_screen.dart';
 import 'package:blazebazzar/views/buyers/authentication/login_screen.dart';
 import 'package:blazebazzar/views/buyers/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: CustomLightTheme(),
       // darkTheme: CustomDarkTheme(),
       // themeMode: ThemeMode.system,
-      home: LoginScreen(),
+      home: MainSellerScreen()//LoginScreen(),
     );
   }
 }
