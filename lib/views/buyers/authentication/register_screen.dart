@@ -4,12 +4,12 @@ import 'package:blazebazzar/views/buyers/authentication/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 
-class RegisterScreen extends StatefulWidget {
+class BuyerRegisterScreen extends StatefulWidget {
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<BuyerRegisterScreen> createState() => _BuyerRegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
   final AuthenticationController _authenticationController =
       AuthenticationController();
 

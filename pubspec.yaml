@@ -42,9 +42,12 @@ dependencies:
   cloud_firestore: ^4.13.6
   firebase_auth: ^4.15.3
   firebase_storage: ^11.5.6
-  image_picker: ^1.0.5
+  image_picker: ^1.0.7
   cached_network_image: ^3.3.1
   shimmer_animation: ^2.1.0+1
+  firebase_ui_auth: ^1.12.1
+  country_state_city_picker: ^1.2.8
+  flutter_easyloading: ^3.0.5
 
 dev_dependencies:
   flutter_test:
