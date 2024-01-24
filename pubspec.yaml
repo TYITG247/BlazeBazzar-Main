@@ -48,6 +48,7 @@ dependencies:
   firebase_ui_auth: ^1.12.1
   country_state_city_picker: ^1.2.8
   flutter_easyloading: ^3.0.5
+  syncfusion_flutter_datepicker: ^24.1.47
 
 dev_dependencies:
   flutter_test:
