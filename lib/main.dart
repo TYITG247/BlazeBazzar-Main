@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: CustomLightTheme(),
       // darkTheme: CustomDarkTheme(),
       // themeMode: ThemeMode.system,
-      home: MainSellerScreen()//LoginScreen(),
+      home: LoginScreen()//LoginScreen(),
     );
   }
 }

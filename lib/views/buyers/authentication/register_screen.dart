@@ -51,196 +51,211 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Form(
-            key: _formkey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 180,
-                  width: MediaQuery.of(context).size.width,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: FlexColor.pinkM3LightPrimary,
+            toolbarHeight: 200,
+            flexibleSpace: LayoutBuilder(builder: (context, constraints) {
+              return FlexibleSpaceBar(
+                background: Container(
                   decoration: const BoxDecoration(
-                    color: FlexColor.mandyRedLightPrimary,
+                    gradient: LinearGradient(
+                      colors: [
+                        FlexColor.redLightPrimary,
+                        FlexColor.mandyRedLightPrimary,
+                      ],
+                    ),
                   ),
                   child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Gap(50),
                       Padding(
-                        padding: EdgeInsets.only(left: 10, top: 10,),
+                        padding: EdgeInsets.only(left: 10, top: 50),
                         child: Text(
-                          "Register",
+                          "Lets get Started, ",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              color: Colors.white,
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 10,),
+                        padding: EdgeInsets.only(left: 10, top: 2),
                         child: Text(
-                          "Create your Account",
+                          "Create to your account",
                           style: TextStyle(
                             color: Colors.white70,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
                       ),
+                      Gap(15),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, top: 8, right: 20, bottom: 8),
-                  child: TextFormField(
-                    onChanged: (value) {
-                      email = value;
-                    },
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Email cannot be Empty";
-                      } else {
-                        return RegExp(
-                                    r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-                                .hasMatch(value)
-                            ? null
-                            : "Enter a valid Email.";
-                      }
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Enter Email",
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, top: 8, right: 20, bottom: 8),
-                  child: TextFormField(
-                    onChanged: (value) {
-                      fullName = value;
-                    },
-                    keyboardType: TextInputType.name,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Name cannot be Empty";
-                      } else {
-                        return RegExp(r'^[a-zA-Z]+(?:\s+[a-zA-Z]+)*$')
-                                .hasMatch(value)
-                            ? null
-                            : "Enter a valid Name.";
-                      }
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Enter Full Name",
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, top: 8, right: 20, bottom: 8),
-                  child: TextFormField(
-                    onChanged: (value) {
-                      phoneNumber = value;
-                    },
-                    keyboardType: TextInputType.phone,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Phone Number cannot be Empty";
-                      } else {
-                        return RegExp(r'^[0-9]{10}$').hasMatch(value)
-                            ? null
-                            : "Enter a valid Phone Number.";
-                      }
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Enter Phone Number",
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, top: 8, right: 20, bottom: 8),
-                  child: TextFormField(
-                    obscureText: true,
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Password cannot be Empty";
-                      } else {
-                        return RegExp(
-                                    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$')
-                                .hasMatch(value)
-                            ? null
-                            : "Enter a valid Password.";
-                      }
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                    ),
-                  ),
-                ),
-                Gap(20),
-                GestureDetector(
-                  onTap: () {
-                    _registerUser();
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width - 40,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: FlexColor.mandyRedLightPrimary,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Center(
-                      child: _isLoading
-                          ? CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                          : Text(
-                              "Register",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 5),
-                            ),
-                    ),
-                  ),
-                ),
-                Row(
+              );
+            }),
+          ),
+          SliverToBoxAdapter(
+            child: Center(
+              child: Form(
+                key: _formkey,
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Already have an account?,",
-                      style: TextStyle(fontSize: 16),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, top: 8, right: 20, bottom: 8),
+                      child: TextFormField(
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Email cannot be Empty";
+                          } else {
+                            return RegExp(
+                                r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                                .hasMatch(value)
+                                ? null
+                                : "Enter a valid Email.";
+                          }
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Enter Email",
+                        ),
+                      ),
                     ),
-                    CupertinoButton(
-                      child: Text("Log In"),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return LoginScreen();
-                            },
-                          ),
-                        );
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, top: 8, right: 20, bottom: 8),
+                      child: TextFormField(
+                        onChanged: (value) {
+                          fullName = value;
+                        },
+                        keyboardType: TextInputType.name,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Name cannot be Empty";
+                          } else {
+                            return RegExp(r'^[a-zA-Z]+(?:\s+[a-zA-Z]+)*$')
+                                .hasMatch(value)
+                                ? null
+                                : "Enter a valid Name.";
+                          }
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Enter Full Name",
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, top: 8, right: 20, bottom: 8),
+                      child: TextFormField(
+                        onChanged: (value) {
+                          phoneNumber = value;
+                        },
+                        keyboardType: TextInputType.phone,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Phone Number cannot be Empty";
+                          } else {
+                            return RegExp(r'^[0-9]{10}$').hasMatch(value)
+                                ? null
+                                : "Enter a valid Phone Number.";
+                          }
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Enter Phone Number",
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, top: 8, right: 20, bottom: 8),
+                      child: TextFormField(
+                        obscureText: true,
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Password cannot be Empty";
+                          } else {
+                            return RegExp(
+                                r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$')
+                                .hasMatch(value)
+                                ? null
+                                : "Enter a valid Password.";
+                          }
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Password",
+                        ),
+                      ),
+                    ),
+                    Gap(20),
+                    GestureDetector(
+                      onTap: () {
+                        _registerUser();
                       },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width - 40,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: FlexColor.mandyRedLightPrimary,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Center(
+                          child: _isLoading
+                              ? CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                              : Text(
+                            "Register",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 5),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Already have an account?,",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        CupertinoButton(
+                          child: Text("Log In"),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return LoginScreen();
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        ],
+      )
     );
   }
 }
