@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:blazebazzar/providers/product_provider.dart';
 import 'package:blazebazzar/seller/views/screens/main_seller_screen.dart';
 import 'package:blazebazzar/views/buyers/authentication/login_screen.dart';
 import 'package:blazebazzar/views/buyers/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'config/app_ui.dart';
 import 'config/app_theme.dart';
 
@@ -12,7 +14,14 @@ void main() async {
       key: UniqueKey(),
       onInitializationComplete: () {
         runApp(
-          const MyApp(),
+          MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (_){
+                return ProductProvider();
+              })
+            ],
+            child: const MyApp(),
+          ),
         );
       },
     ),
@@ -25,13 +34,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BlazeBazzar',
-      debugShowCheckedModeBanner: false,
-      theme: CustomLightTheme(),
-      // darkTheme: CustomDarkTheme(),
-      // themeMode: ThemeMode.system,
-      home: LoginScreen()//LoginScreen(),
-    );
+        title: 'BlazeBazzar',
+        debugShowCheckedModeBanner: false,
+        theme: CustomLightTheme(),
+        // darkTheme: CustomDarkTheme(),
+        // themeMode: ThemeMode.system,
+        home: MainSellerScreen() //LoginScreen(),
+        );
   }
 }
 
@@ -65,9 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return MaterialApp(
       title: 'BlazeBazzar',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-
-      ),
+      theme: ThemeData(),
       home: Scaffold(
         body: Center(
           child: Column(

@@ -1,6 +1,9 @@
 import 'package:blazebazzar/config/app_ui.dart';
+import 'package:blazebazzar/providers/product_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class GeneralScreen extends StatefulWidget {
   const GeneralScreen({super.key});
@@ -33,8 +36,16 @@ class _GeneralScreenState extends State<GeneralScreen> {
     super.initState();
   }
 
+  String formattedDate(date) {
+    final outputDateFormat = DateFormat('dd-MM-yyyy');
+    final outPutDate = outputDateFormat.format(date);
+    return outPutDate;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final ProductProvider _productProvider =
+        Provider.of<ProductProvider>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -42,15 +53,25 @@ class _GeneralScreenState extends State<GeneralScreen> {
           child: Column(
             children: [
               TextFormField(
+                onChanged: (value) {
+                  _productProvider.getFormData(productName: value);
+                },
                 decoration: InputDecoration(labelText: "Enter Product Name"),
               ),
               Gap(15),
               TextFormField(
+                onChanged: (value) {
+                  _productProvider.getFormData(
+                      productPrice: double.parse(value));
+                },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: "Enter Product Price"),
               ),
               Gap(15),
               TextFormField(
+                onChanged: (value) {
+                  _productProvider.getFormData(quantity: int.parse(value));
+                },
                 keyboardType: TextInputType.number,
                 decoration:
                     InputDecoration(labelText: "Enter Product Quantity"),
@@ -66,12 +87,19 @@ class _GeneralScreenState extends State<GeneralScreen> {
                     );
                   },
                 ).toList(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    _productProvider.getFormData(category: value);
+                  });
+                },
               ),
               Gap(15),
               TextFormField(
                 maxLines: 5,
                 maxLength: 800,
+                onChanged: (value) {
+                  _productProvider.getFormData(description: value);
+                },
                 decoration: InputDecoration(
                   labelText: "Enter Product Description",
                   border: OutlineInputBorder(
@@ -81,6 +109,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
               ),
               Gap(15),
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CupertinoButton(
                     child: Text("Schedule"),
@@ -89,9 +118,27 @@ class _GeneralScreenState extends State<GeneralScreen> {
                         context: context,
                         firstDate: DateTime.now(),
                         lastDate: DateTime(5000),
-                      );
+                      ).then((value) {
+                        setState(() {
+                          _productProvider.getFormData(scheduleDate: value);
+                        });
+                      });
                     },
-                  )
+                  ),
+                  if (_productProvider.productData['scheduleDate'] != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(":"),
+                    ),
+                  if (_productProvider.productData['scheduleDate'] != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        formattedDate(
+                          _productProvider.productData['scheduleDate'],
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ],
