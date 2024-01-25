@@ -1,4 +1,4 @@
-# blazebazzar
+# BlazeBazzar
 
 A new Flutter project.
 
