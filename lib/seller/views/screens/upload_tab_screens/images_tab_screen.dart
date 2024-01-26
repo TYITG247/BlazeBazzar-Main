@@ -49,14 +49,20 @@ class _ImagesTabScreenState extends State<ImagesTabScreen> {
                 ),
                 itemBuilder: (context, index) {
                   return index == 0
-                      ? Center(
-                          child: IconButton(
-                            onPressed: () {
-                              chooseImage();
-                            },
-                            icon: Icon(Icons.add),
+                      ? Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                        child: Center(
+                            child: IconButton(
+                              onPressed: () {
+                                chooseImage();
+                              },
+                              icon: Icon(Icons.add),
+                            ),
                           ),
-                        )
+                      )
                       : Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
