@@ -41,6 +41,13 @@ class _ShippingScreenState extends State<ShippingScreen> {
               onChanged: (value){
                 _productProvider.getFormData(shippingCharge: int.parse(value));
               },
+              validator: (value){
+                if(value!.isEmpty){
+                  return "Enter Charge Amount";
+                } else {
+                  return null;
+                }
+              },
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Charge Amount"

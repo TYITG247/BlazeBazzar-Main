@@ -8,7 +8,7 @@ import 'package:blazebazzar/seller/views/screens/upload_tab_screens/shipping_scr
 import 'package:provider/provider.dart';
 
 class UploadScreen extends StatelessWidget {
-  const UploadScreen({super.key});
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -16,81 +16,86 @@ class UploadScreen extends StatelessWidget {
         Provider.of<ProductProvider>(context);
     return DefaultTabController(
       length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 10,
-          bottom: const TabBar(
-            indicatorSize: TabBarIndicatorSize.tab,
-            tabs: [
-              Tab(
-                child: Text(
-                  'General',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
+      child: Form(
+        key: _formKey,
+        child: Scaffold(
+          appBar: AppBar(
+            elevation: 10,
+            bottom: const TabBar(
+              indicatorSize: TabBarIndicatorSize.tab,
+              tabs: [
+                Tab(
+                  child: Text(
+                    'General',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
-              // Tab(
-              //   child: Text(
-              //     'Second Hand',
-              //     textAlign: TextAlign.center,
-              //     style: TextStyle(
-              //       fontSize: 12,
-              //     ),
-              //   ),
-              // ),
-              Tab(
-                child: Text(
-                  'Shipping Charge',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
+                // Tab(
+                //   child: Text(
+                //     'Second Hand',
+                //     textAlign: TextAlign.center,
+                //     style: TextStyle(
+                //       fontSize: 12,
+                //     ),
+                //   ),
+                // ),
+                Tab(
+                  child: Text(
+                    'Shipping Charge',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
-              Tab(
-                child: Text(
-                  'Attributes',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
+                Tab(
+                  child: Text(
+                    'Attributes',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
-              Tab(
-                child: Text(
-                  'Images',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
+                Tab(
+                  child: Text(
+                    'Images',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: [
+              GeneralScreen(),
+              //SecondHandScreen(),
+              ShippingScreen(),
+              AttributesTabScreen(),
+              ImagesTabScreen(),
             ],
           ),
-        ),
-        body: TabBarView(
-          children: [
-            GeneralScreen(),
-            //SecondHandScreen(),
-            ShippingScreen(),
-            AttributesTabScreen(),
-            ImagesTabScreen(),
-          ],
-        ),
-        bottomSheet: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-            onPressed: () {
-              print(_productProvider.productData['productName']);
-              print(_productProvider.productData['productPrice']);
-              print(_productProvider.productData['quantity']);
-              print(_productProvider.productData['category']);
-              print(_productProvider.productData['description']);
-              print(_productProvider.productData['imageUrlList']);
-            },
-            child: Text("Save"),
+          bottomSheet: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                if(_formKey.currentState!.validate()){
+                  print(_productProvider.productData['productName']);
+                  print(_productProvider.productData['productPrice']);
+                  print(_productProvider.productData['quantity']);
+                  print(_productProvider.productData['category']);
+                  print(_productProvider.productData['description']);
+                  print(_productProvider.productData['imageUrlList']);
+                }
+              },
+              child: Text("Save"),
+            ),
           ),
         ),
       ),

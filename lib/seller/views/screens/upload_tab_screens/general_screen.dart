@@ -56,6 +56,13 @@ class _GeneralScreenState extends State<GeneralScreen> {
                 onChanged: (value) {
                   _productProvider.getFormData(productName: value);
                 },
+                validator: (value){
+                  if(value!.isEmpty){
+                    return "Enter Product Name";
+                  } else {
+                    return null;
+                  }
+                },
                 decoration: InputDecoration(labelText: "Enter Product Name"),
               ),
               Gap(15),
@@ -64,6 +71,13 @@ class _GeneralScreenState extends State<GeneralScreen> {
                   _productProvider.getFormData(
                       productPrice: double.parse(value));
                 },
+                validator: (value){
+                  if(value!.isEmpty){
+                    return "Enter Product Price";
+                  } else {
+                    return null;
+                  }
+                },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: "Enter Product Price"),
               ),
@@ -71,6 +85,13 @@ class _GeneralScreenState extends State<GeneralScreen> {
               TextFormField(
                 onChanged: (value) {
                   _productProvider.getFormData(quantity: int.parse(value));
+                },
+                validator: (value){
+                  if(value!.isEmpty){
+                    return "Enter Product Quantity";
+                  } else {
+                    return null;
+                  }
                 },
                 keyboardType: TextInputType.number,
                 decoration:
@@ -99,6 +120,13 @@ class _GeneralScreenState extends State<GeneralScreen> {
                 maxLength: 800,
                 onChanged: (value) {
                   _productProvider.getFormData(description: value);
+                },
+                validator: (value){
+                  if(value!.isEmpty){
+                    return "Enter Product Description";
+                  } else {
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: "Enter Product Description",
