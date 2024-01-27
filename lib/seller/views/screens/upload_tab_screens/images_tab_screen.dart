@@ -13,7 +13,9 @@ class ImagesTabScreen extends StatefulWidget {
   State<ImagesTabScreen> createState() => _ImagesTabScreenState();
 }
 
-class _ImagesTabScreenState extends State<ImagesTabScreen> {
+class _ImagesTabScreenState extends State<ImagesTabScreen> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   final ImagePicker picker = ImagePicker();
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
@@ -33,6 +35,7 @@ class _ImagesTabScreenState extends State<ImagesTabScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final ProductProvider _productProvider =
         Provider.of<ProductProvider>(context);
     return Padding(
@@ -77,25 +80,27 @@ class _ImagesTabScreenState extends State<ImagesTabScreen> {
             Gap(30),
             TextButton(
               onPressed: () async {
-                EasyLoading.show();
+                EasyLoading.show(status: "Saving Images");
                 for (var img in _image) {
                   Reference ref = _storage
                       .ref()
                       .child('productImage')
-                      .child(Uuid().v4() + ".png");
+                      .child(Uuid().v4());
                   await ref.putFile(img).whenComplete(() async {
                     await ref.getDownloadURL().then((value) {
                       setState(() {
                         _imageUrlList.add(value);
-                        _productProvider.getFormData(
-                            imageUrlList: _imageUrlList);
-                        EasyLoading.dismiss();
                       });
                     });
                   });
                 }
+                setState(() {
+                  _productProvider.getFormData(
+                      imageUrlList: _imageUrlList);
+                  EasyLoading.dismiss();
+                });
               },
-              child: _image.isNotEmpty ? Text("Upload") : Text(""),
+              child: _image.isNotEmpty ? Text("Save") : Text(""),
             ),
           ],
         ),

@@ -7,7 +7,9 @@ class AttributesTabScreen extends StatefulWidget {
   State<AttributesTabScreen> createState() => _AttributesTabScreenState();
 }
 
-class _AttributesTabScreenState extends State<AttributesTabScreen> {
+class _AttributesTabScreenState extends State<AttributesTabScreen> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   final TextEditingController _sizeController = TextEditingController();
   bool _entered = false;
   bool _isSave = false;
@@ -15,6 +17,7 @@ class _AttributesTabScreenState extends State<AttributesTabScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final ProductProvider _productProvider =
         Provider.of<ProductProvider>(context);
     return Padding(
@@ -47,13 +50,6 @@ class _AttributesTabScreenState extends State<AttributesTabScreen> {
                       setState(() {
                         _entered = true;
                       });
-                    },
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return "Enter Size";
-                      } else {
-                        return null;
-                      }
                     },
                     decoration: InputDecoration(labelText: "Size"),
                   ),
