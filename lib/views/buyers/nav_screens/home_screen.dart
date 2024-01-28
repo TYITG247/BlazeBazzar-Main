@@ -20,15 +20,17 @@ class _HomeScreenState extends State<HomeScreen> {
         left: 15,
         right: 15,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const WelcomeText(),
-          const Gap(10),
-          const SearchInputWidget(),
-          BannerWidget(),
-          CategoryText(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const WelcomeText(),
+            const Gap(10),
+            const SearchInputWidget(),
+            BannerWidget(),
+            CategoryText(),
+          ],
+        ),
       ),
     );
   }
