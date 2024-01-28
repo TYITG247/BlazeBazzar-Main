@@ -1,4 +1,5 @@
 import 'package:blazebazzar/config/app_ui.dart';
+import 'package:blazebazzar/views/buyers/product_deatil/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -30,35 +31,49 @@ class HomeProducts extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               final productData = snapshot.data!.docs[index];
-              return Card(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 180,
-                        width: 200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(productData['imageUrlList'][0]),
-                            fit: BoxFit.cover,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ProductDetailScreen(productData: productData,);
+                      },
+                    ),
+                  );
+                },
+                child: Card(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 180,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                  NetworkImage(productData['imageUrlList'][0]),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Text(
-                      productData['productName'],
-                      style: TextStyle(
-                        fontSize: 20,
+                      Text(
+                        productData['productName'],
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "₹ " + productData['productPrice'].toStringAsFixed(2),
-                      style: TextStyle(
-                        fontSize: 20,
+                      Text(
+                        "₹ " + productData['productPrice'].toStringAsFixed(2),
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: FlexColor.mandyRedLightPrimary
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
