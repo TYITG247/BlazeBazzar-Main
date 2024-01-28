@@ -1,6 +1,7 @@
 import 'package:blazebazzar/config/app_theme.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 import 'package:blazebazzar/views/buyers/nav_screens/widgets/home_products.dart';
+import 'package:blazebazzar/views/buyers/nav_screens/widgets/main_products_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoryText extends StatefulWidget {
@@ -75,6 +76,8 @@ class _CategoryTextState extends State<CategoryText> {
               );
             },
           ),
+          if(_selectedCategory == null)
+            MainProductsWidget(),
           if(_selectedCategory != null)
             HomeProducts(categoryName: _selectedCategory!),
         ],
