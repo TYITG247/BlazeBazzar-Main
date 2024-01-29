@@ -7,6 +7,7 @@ import 'package:blazebazzar/seller/views/screens/upload_tab_screens/images_tab_s
 import 'package:blazebazzar/seller/views/screens/upload_tab_screens/second_hand_screen.dart';
 import 'package:blazebazzar/seller/views/screens/upload_tab_screens/shipping_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -94,7 +95,7 @@ class UploadScreen extends StatelessWidget {
                 if (_formKey.currentState!.validate()) {
                   final productId = Uuid().v4();
                   await _firestore.collection('products').doc(productId).set({
-                    'product': productId,
+                    'productId': productId,
                     'productName': _productProvider.productData['productName'],
                     'productPrice':
                         _productProvider.productData['productPrice'],
@@ -111,6 +112,7 @@ class UploadScreen extends StatelessWidget {
                         _productProvider.productData['shippingCharge'],
                     'brandName': _productProvider.productData['brandName'],
                     'sizeList': _productProvider.productData['sizeList'],
+                    'sellerId': FirebaseAuth.instance.currentUser!.uid,
                   }).whenComplete(
                     () {
                       _productProvider.clearData();

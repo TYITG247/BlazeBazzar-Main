@@ -8,15 +8,6 @@ class CartProvider with ChangeNotifier {
     return _cartItems;
   }
 
-  // final String? productName;
-  // final String? productId;
-  // final List? imageUrl;
-  // final int? quantity;
-  // final double? price;
-  // final String? sellerId;
-  // final String? productSize;
-  // Timestamp scheduleDate;
-
   void addProductToCart(
     String productName,
     String productId,
@@ -41,6 +32,21 @@ class CartProvider with ChangeNotifier {
           scheduleDate: exitingCart.scheduleDate,
         ),
       );
+      notifyListeners();
+    } else {
+      _cartItems.putIfAbsent(
+        productId,
+        () => CartModel(
+            productName: productName,
+            productId: productId,
+            imageUrl: imageUrl,
+            quantity: quantity,
+            price: price,
+            sellerId: sellerId,
+            productSize: productSize,
+            scheduleDate: scheduleDate),
+      );
+      notifyListeners();
     }
   }
 }

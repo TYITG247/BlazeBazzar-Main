@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:blazebazzar/providers/cart_provider.dart';
 import 'package:blazebazzar/providers/product_provider.dart';
 import 'package:blazebazzar/seller/views/screens/main_seller_screen.dart';
 import 'package:blazebazzar/views/buyers/authentication/login_screen.dart';
@@ -19,7 +20,10 @@ void main() async {
             providers: [
               ChangeNotifierProvider(create: (_){
                 return ProductProvider();
-              })
+              }),
+              ChangeNotifierProvider(create: (_){
+                return CartProvider();
+              }),
             ],
             child: const MyApp(),
           ),

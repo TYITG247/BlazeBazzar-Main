@@ -1,7 +1,9 @@
 import 'package:blazebazzar/config/app_ui.dart';
+import 'package:blazebazzar/providers/cart_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final dynamic productData;
@@ -24,6 +26,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final CartProvider _cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.productData['productName']),
@@ -183,32 +186,46 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
       bottomSheet: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 50,
-          width: MediaQuery.of(context).size.width - 100,
-          decoration: BoxDecoration(
-            color: FlexColor.mandyRedLightPrimary,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                CupertinoIcons.cart,
-                color: Colors.white,
-                size: 35,
-              ),
-              Gap(15),
-              Text(
-                "Add To Cart",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+        child: InkWell(
+          onTap: () {
+            _cartProvider.addProductToCart(
+              widget.productData['productName'],
+              widget.productData['productId'],
+              widget.productData['imageUrlList'],
+              widget.productData['quantity'],
+              widget.productData['productPrice'],
+              widget.productData['sellerId'],
+              _selectedSize!,
+              widget.productData['scheduleDate'],
+            );
+          },
+          child: Container(
+            height: 50,
+            width: MediaQuery.of(context).size.width - 100,
+            decoration: BoxDecoration(
+              color: FlexColor.mandyRedLightPrimary,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  CupertinoIcons.cart,
                   color: Colors.white,
-                  letterSpacing: 3,
+                  size: 35,
                 ),
-              ),
-            ],
+                Gap(15),
+                Text(
+                  "Add To Cart",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    letterSpacing: 3,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

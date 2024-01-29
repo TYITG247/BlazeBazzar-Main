@@ -18,10 +18,12 @@ class _CartScreenState extends State<CartScreen> {
             Text(
               "Your Shopping Cart is Empty",
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
-                letterSpacing: 2
+                letterSpacing: 2,
+                color: Colors.grey.shade700,
               ),
+              textAlign: TextAlign.center,
             ),
             Gap(15),
             Container(
@@ -37,7 +39,7 @@ class _CartScreenState extends State<CartScreen> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
-                    letterSpacing: 2,
+                    letterSpacing: 3,
                   ),
                 ),
               ),
