@@ -1,4 +1,5 @@
 import 'package:blazebazzar/config/app_ui.dart';
+import 'package:blazebazzar/views/buyers/authentication/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,14 +12,15 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('buyers');
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(FirebaseAuth.instance.currentUser!.uid).get(),
+      future: users.doc(_auth.currentUser!.uid).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
         if (snapshot.hasError) {
           return Text("Something went wrong");
         }
@@ -28,14 +30,15 @@ class _AccountScreenState extends State<AccountScreen> {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
           return Scaffold(
             appBar: AppBar(
               title: Text("Profile"),
               centerTitle: true,
             ),
             body: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: EdgeInsets.all(15.0),
               child: Column(
                 children: [
                   Gap(25),
@@ -46,7 +49,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: Center(
                         child: Text(
                           "you",
-                          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w200),
+                          style: TextStyle(
+                              fontSize: 28, fontWeight: FontWeight.w200),
                         ),
                       ),
                     ),
@@ -95,6 +99,20 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ),
                   ListTile(
+                    onTap: () async {
+                      await _auth.signOut().whenComplete(
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return LoginScreen();
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    },
                     leading: Icon(Icons.logout_rounded),
                     title: Text(
                       "LogOut",
@@ -109,7 +127,5 @@ class _AccountScreenState extends State<AccountScreen> {
         return Center(child: CircularProgressIndicator());
       },
     );
-
-
   }
 }
