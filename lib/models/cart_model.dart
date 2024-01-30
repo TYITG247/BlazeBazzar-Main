@@ -5,7 +5,7 @@ class CartModel with ChangeNotifier {
   final String productName;
   final String productId;
   final List imageUrl;
-  final int quantity;
+  int quantity;
   final double price;
   final String sellerId;
   final String productSize;
@@ -21,4 +21,10 @@ class CartModel with ChangeNotifier {
     required this.productSize,
     required this.scheduleDate,
   });
+  void increase(){
+    quantity++;
+  }
+  void decrease(){
+    quantity--;
+  }
 }

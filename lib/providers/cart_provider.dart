@@ -49,4 +49,12 @@ class CartProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+  void increment(CartModel cartModel){
+    cartModel.increase();
+    notifyListeners();
+  }
+  void decrement(CartModel cartModel){
+    cartModel.decrease();
+    notifyListeners();
+  }
 }
