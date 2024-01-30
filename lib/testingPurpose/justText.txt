@@ -1,0 +1,11 @@
+_cartProvider.addProductToCart(
+              widget.productData['productName'],
+              widget.productData['productId'],
+              widget.productData['imageUrlList'],
+              1,
+              widget.productData['quantity'],
+              widget.productData['productPrice'].toDouble(),
+              widget.productData['sellerId'],
+              _selectedSize!,
+              widget.productData['scheduleDate'],
+            );

@@ -1,5 +1,6 @@
 import 'package:blazebazzar/config/app_ui.dart';
 import 'package:blazebazzar/providers/cart_provider.dart';
+import 'package:blazebazzar/utils/show_snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:intl/intl.dart';
@@ -188,16 +189,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () {
-            _cartProvider.addProductToCart(
-              widget.productData['productName'],
-              widget.productData['productId'],
-              widget.productData['imageUrlList'],
-              1,
-              widget.productData['productPrice'].toDouble(),
-              widget.productData['sellerId'],
-              _selectedSize!,
-              widget.productData['scheduleDate'],
-            );
+            if(_selectedSize == null){
+              showSnack(context, "Please select a Size");
+            }else{
+              _cartProvider.addProductToCart(
+                widget.productData['productName'],
+                widget.productData['productId'],
+                widget.productData['imageUrlList'],
+                1,
+                widget.productData['quantity'],
+                widget.productData['productPrice'].toDouble(),
+                widget.productData['sellerId'],
+                _selectedSize!,
+                widget.productData['scheduleDate'],
+              );
+            }
           },
           child: Container(
             height: 50,

@@ -23,6 +23,17 @@ class _CartScreenState extends State<CartScreen> {
             fontSize: 24,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _cartProvider.removeAllItem();
+            },
+            icon: Icon(
+              CupertinoIcons.delete_solid,
+              color: Colors.red.shade700,
+            ),
+          ),
+        ],
       ),
       body: ListView.builder(
         shrinkWrap: true,
@@ -58,7 +69,7 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                         Text(
-                          "₹ " + cartData.price.toStringAsFixed(2),
+                          "₹" + cartData.price.toStringAsFixed(2),
                           style: TextStyle(
                             fontSize: 22,
                             color: FlexColor.mandyRedLightPrimary,
@@ -72,45 +83,64 @@ class _CartScreenState extends State<CartScreen> {
                             cartData.productSize,
                           ),
                         ),
-                        Container(
-                          height: 40,
-                          width: 120,
-                          decoration: BoxDecoration(
-                            color: FlexColor.mandyRedLightPrimary,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              IconButton(
-                                onPressed: cartData.quantity == 1
-                                    ? null
-                                    : () {
-                                        _cartProvider.decrement(cartData);
-                                      },
-                                icon: Icon(
-                                  CupertinoIcons.minus,
-                                  color: Colors.white,
-                                ),
+                        Row(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                color: FlexColor.mandyRedLightPrimary,
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              Text(
-                                cartData.quantity.toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  IconButton(
+                                    onPressed: cartData.quantity == 1
+                                        ? null
+                                        : () {
+                                            _cartProvider.decrement(cartData);
+                                          },
+                                    icon: Icon(
+                                      CupertinoIcons.minus,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    cartData.quantity.toString(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: cartData.productQuantity ==
+                                            cartData.quantity
+                                        ? null
+                                        : () {
+                                            _cartProvider.increment(cartData);
+                                          },
+                                    icon: Icon(
+                                      CupertinoIcons.plus,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  _cartProvider.increment(cartData);
-                                },
-                                icon: Icon(
-                                  CupertinoIcons.plus,
-                                  color: Colors.white,
-                                ),
+                            ),
+                            Gap(30),
+                            IconButton(
+                              onPressed: () {
+                                _cartProvider.removeItem(
+                                  cartData.productId,
+                                );
+                              },
+                              icon: Icon(
+                                CupertinoIcons.cart_fill_badge_minus,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -158,6 +188,40 @@ class _CartScreenState extends State<CartScreen> {
       //     ],
       //   ),
       // ),
+
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: 50,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: FlexColor.mandyRedLightPrimary,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Checkout",
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 4),
+              ),
+              Gap(15),
+              Text(
+                "₹" + _cartProvider.totalPrice.toStringAsFixed(2),
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 4),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

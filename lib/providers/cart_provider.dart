@@ -7,12 +7,20 @@ class CartProvider with ChangeNotifier {
   Map<String, CartModel> get getCartItem {
     return _cartItems;
   }
+  double get totalPrice{
+    var total = 0.0;
+    _cartItems.forEach((key, value) {
+      total += value.price * value.quantity;
+    });
+    return total;
+  }
 
   void addProductToCart(
     String productName,
     String productId,
     List imageUrl,
     int quantity,
+    int productQuantity,
     double price,
     String sellerId,
     String productSize,
@@ -26,6 +34,7 @@ class CartProvider with ChangeNotifier {
           productId: exitingCart.productId,
           imageUrl: exitingCart.imageUrl,
           quantity: exitingCart.quantity + 1,
+          productQuantity: exitingCart.productQuantity,
           price: exitingCart.price,
           sellerId: exitingCart.sellerId,
           productSize: exitingCart.productSize,
@@ -41,6 +50,7 @@ class CartProvider with ChangeNotifier {
             productId: productId,
             imageUrl: imageUrl,
             quantity: quantity,
+            productQuantity: productQuantity,
             price: price,
             sellerId: sellerId,
             productSize: productSize,
@@ -49,12 +59,22 @@ class CartProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
   void increment(CartModel cartModel){
     cartModel.increase();
     notifyListeners();
   }
   void decrement(CartModel cartModel){
     cartModel.decrease();
+    notifyListeners();
+  }
+
+  removeItem(productId){
+    _cartItems.remove(productId);
+    notifyListeners();
+  }
+  removeAllItem(){
+    _cartItems.clear();
     notifyListeners();
   }
 }

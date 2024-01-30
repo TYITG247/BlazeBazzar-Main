@@ -6,6 +6,7 @@ class CartModel with ChangeNotifier {
   final String productId;
   final List imageUrl;
   int quantity;
+  int productQuantity;
   final double price;
   final String sellerId;
   final String productSize;
@@ -16,6 +17,7 @@ class CartModel with ChangeNotifier {
     required this.productId,
     required this.imageUrl,
     required this.quantity,
+    required this.productQuantity,
     required this.price,
     required this.sellerId,
     required this.productSize,
