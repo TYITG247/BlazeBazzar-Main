@@ -1,12 +1,18 @@
+import 'package:blazebazzar/buyers/views/product_deatil/product_detail_screen.dart';
 import 'package:blazebazzar/config/app_ui.dart';
-import 'package:blazebazzar/views/buyers/product_deatil/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-class MainProductsWidget extends StatelessWidget {
+class HomeProducts extends StatelessWidget {
+  final String categoryName;
+
+  const HomeProducts({super.key, required this.categoryName});
+
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> _productsStream = FirebaseFirestore.instance
         .collection('products')
+        .where('category', isEqualTo: categoryName)
         .snapshots();
     return StreamBuilder<QuerySnapshot>(
       stream: _productsStream,
@@ -47,7 +53,7 @@ class MainProductsWidget extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image:
-                              NetworkImage(productData['imageUrlList'][0]),
+                                  NetworkImage(productData['imageUrlList'][0]),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -62,8 +68,8 @@ class MainProductsWidget extends StatelessWidget {
                       Text(
                         "₹ " + productData['productPrice'].toStringAsFixed(2),
                         style: TextStyle(
-                            fontSize: 20,
-                            color: FlexColor.mandyRedLightPrimary
+                          fontSize: 20,
+                          color: FlexColor.mandyRedLightPrimary
                         ),
                       ),
                     ],

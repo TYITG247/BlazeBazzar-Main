@@ -1,5 +1,5 @@
-import 'package:blazebazzar/views/buyers/nav_screens/widgets/banner_widget.dart';
-import 'package:blazebazzar/views/buyers/nav_screens/widgets/category_text.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/widgets/banner_widget.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/widgets/category_text.dart';
 import 'widgets/search_input_widget.dart';
 import 'widgets/welcome_text_widget.dart';
 import 'package:blazebazzar/config/app_ui.dart';

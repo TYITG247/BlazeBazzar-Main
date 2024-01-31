@@ -1,12 +1,13 @@
+import 'package:blazebazzar/buyers/views/nav_screens/account_screen.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/cart_screen.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/category_screen.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/home_screen.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/search_screen.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/store_screen.dart';
 import 'package:flutter/cupertino.dart';
 import '../../config/app_ui.dart';
 import '../../config/app_theme.dart';
-import 'nav_screens/account_screen.dart';
-import 'nav_screens/cart_screen.dart';
-import 'nav_screens/category_screen.dart';
-import 'nav_screens/home_screen.dart';
-import 'nav_screens/search_screen.dart';
-import 'nav_screens/store_screen.dart';
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

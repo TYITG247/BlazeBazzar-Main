@@ -1,6 +1,6 @@
-import 'package:blazebazzar/controllers/authentication_controller.dart';
+import 'package:blazebazzar/buyers/controllers/authentication_controller.dart';
+import 'package:blazebazzar/buyers/views/authentication/login_screen.dart';
 import 'package:blazebazzar/utils/show_snackbar.dart';
-import 'package:blazebazzar/views/buyers/authentication/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 

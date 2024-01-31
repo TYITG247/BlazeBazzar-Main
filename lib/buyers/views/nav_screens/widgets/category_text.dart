@@ -1,7 +1,7 @@
 import 'package:blazebazzar/config/app_theme.dart';
 import 'package:blazebazzar/config/app_ui.dart';
-import 'package:blazebazzar/views/buyers/nav_screens/widgets/home_products.dart';
-import 'package:blazebazzar/views/buyers/nav_screens/widgets/main_products_widget.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/widgets/home_products.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/widgets/main_products_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoryText extends StatefulWidget {

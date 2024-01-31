@@ -1,4 +1,4 @@
-import 'package:blazebazzar/models/cart_model.dart';
+import 'package:blazebazzar/buyers/models/cart_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
