@@ -1,3 +1,4 @@
+import 'package:blazebazzar/buyers/views/inner_screens/checkout_screen.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 import 'package:blazebazzar/providers/cart_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -192,34 +193,46 @@ class _CartScreenState extends State<CartScreen> {
 
       bottomSheet: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 50,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: FlexColor.mandyRedLightPrimary,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Checkout",
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 4),
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return CheckoutScreen();
+                },
               ),
-              Gap(15),
-              Text(
-                "₹" + _cartProvider.totalPrice.toStringAsFixed(2),
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 4),
-              ),
-            ],
+            );
+          },
+          child: Container(
+            height: 50,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: FlexColor.mandyRedLightPrimary,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Checkout",
+                  style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 4),
+                ),
+                Gap(15),
+                Text(
+                  "₹" + _cartProvider.totalPrice.toStringAsFixed(2),
+                  style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 4),
+                ),
+              ],
+            ),
           ),
         ),
       ),
