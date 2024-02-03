@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         theme: CustomLightTheme(),
         // darkTheme: CustomDarkTheme(),
         // themeMode: ThemeMode.system,
-        home: MainScreen(),
+        home: LoginScreen(),
       builder: EasyLoading.init(),
         );
   }

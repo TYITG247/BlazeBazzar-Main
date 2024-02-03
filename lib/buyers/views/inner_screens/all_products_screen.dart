@@ -18,6 +18,10 @@ class AllProductsScreen extends StatelessWidget {
           'category',
           isEqualTo: categoryData['categoryName'],
         )
+        .where(
+          'approved',
+          isEqualTo: true,
+        )
         .snapshots();
     return Scaffold(
       appBar: AppBar(
@@ -42,11 +46,10 @@ class AllProductsScreen extends StatelessWidget {
           return GridView.builder(
             itemCount: snapshot.data!.docs.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 200/300
-            ),
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 200 / 300),
             itemBuilder: (context, index) {
               final productData = snapshot.data!.docs[index];
               return GestureDetector(
@@ -55,7 +58,9 @@ class AllProductsScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return ProductDetailScreen(productData: productData,);
+                        return ProductDetailScreen(
+                          productData: productData,
+                        );
                       },
                     ),
                   );
@@ -71,7 +76,7 @@ class AllProductsScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image:
-                              NetworkImage(productData['imageUrlList'][0]),
+                                  NetworkImage(productData['imageUrlList'][0]),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -87,8 +92,7 @@ class AllProductsScreen extends StatelessWidget {
                         "₹ " + productData['productPrice'].toStringAsFixed(2),
                         style: TextStyle(
                             fontSize: 20,
-                            color: FlexColor.mandyRedLightPrimary
-                        ),
+                            color: FlexColor.mandyRedLightPrimary),
                       ),
                     ],
                   ),

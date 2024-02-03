@@ -1,4 +1,5 @@
 import 'package:blazebazzar/buyers/views/authentication/login_screen.dart';
+import 'package:blazebazzar/buyers/views/inner_screens/edit_profile.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,9 +56,11 @@ class _AccountScreenState extends State<AccountScreen> {
                       backgroundColor: FlexColor.mandyRedLightPrimaryContainer,
                       child: Center(
                         child: Text(
-                          "you",
+                          '${data['fullName'][0]}'.capitalize,
                           style: TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.w200),
+                            color: Colors.white,
+                            fontSize: 54,
+                          ),
                         ),
                       ),
                     ),
@@ -70,6 +73,33 @@ class _AccountScreenState extends State<AccountScreen> {
                   Text(
                     data['email'],
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.w300),
+                  ),
+                  Gap(10),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return EditProfileScreen(userData: data,);
+                          },
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width - 300,
+                      decoration: BoxDecoration(
+                        color: FlexColor.mandyRedLightPrimaryContainer,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Edit Profile",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
                   Gap(15),
                   Divider(

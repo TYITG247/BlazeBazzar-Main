@@ -7,6 +7,7 @@ class MainProductsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> _productsStream = FirebaseFirestore.instance
         .collection('products')
+        .where('approved', isEqualTo: true)
         .snapshots();
     return StreamBuilder<QuerySnapshot>(
       stream: _productsStream,
@@ -27,8 +28,7 @@ class MainProductsWidget extends StatelessWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
-                childAspectRatio: 200/300
-            ),
+                childAspectRatio: 200 / 300),
             itemBuilder: (context, index) {
               final productData = snapshot.data!.docs[index];
               return GestureDetector(
@@ -37,7 +37,9 @@ class MainProductsWidget extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return ProductDetailScreen(productData: productData,);
+                        return ProductDetailScreen(
+                          productData: productData,
+                        );
                       },
                     ),
                   );
@@ -53,7 +55,7 @@ class MainProductsWidget extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image:
-                              NetworkImage(productData['imageUrlList'][0]),
+                                  NetworkImage(productData['imageUrlList'][0]),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -69,8 +71,7 @@ class MainProductsWidget extends StatelessWidget {
                         "₹ " + productData['productPrice'].toStringAsFixed(2),
                         style: TextStyle(
                             fontSize: 20,
-                            color: FlexColor.mandyRedLightPrimary
-                        ),
+                            color: FlexColor.mandyRedLightPrimary),
                       ),
                     ],
                   ),

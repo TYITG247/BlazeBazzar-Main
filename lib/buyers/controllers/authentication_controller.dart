@@ -24,9 +24,9 @@ class AuthenticationController {
         await _firestore.collection("buyers").doc(cred.user!.uid).set({
           'email': email,
           'fullName': fullName,
-          'phone': [phoneNumber],
+          'phone': phoneNumber,
           'buyerID': cred.user!.uid,
-          'address': []
+          'address': ''
         });
         res = "Successful";
       } else {
