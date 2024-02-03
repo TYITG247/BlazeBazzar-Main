@@ -198,48 +198,67 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       bottomSheet: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
-          onTap: () {
-            if (_selectedSize == null) {
-              showSnack(context, "Please select a Size");
-            } else {
-              _cartProvider.addProductToCart(
-                widget.productData['productName'],
-                widget.productData['productId'],
-                widget.productData['imageUrlList'],
-                1,
-                widget.productData['quantity'],
-                widget.productData['productPrice'].toDouble(),
-                widget.productData['sellerId'],
-                _selectedSize!,
-                widget.productData['scheduleDate'],
-              );
-            }
-          },
+          onTap: _cartProvider.getCartItem
+                  .containsKey(widget.productData['productId'])
+              ? null
+              : () {
+                  if (_selectedSize == null) {
+                    showSnack(context, "Please select a Size");
+                  } else {
+                    _cartProvider.addProductToCart(
+                      widget.productData['productName'],
+                      widget.productData['productId'],
+                      widget.productData['imageUrlList'],
+                      1,
+                      widget.productData['quantity'],
+                      widget.productData['productPrice'].toDouble(),
+                      widget.productData['sellerId'],
+                      _selectedSize!,
+                      widget.productData['scheduleDate'],
+                    );
+                    return showSnack(context,
+                        "You Added ${widget.productData['productName']} To your Cart");
+                  }
+                },
           child: Container(
             height: 50,
             width: MediaQuery.of(context).size.width - 100,
             decoration: BoxDecoration(
-              color: FlexColor.mandyRedLightPrimary,
+              color: _cartProvider.getCartItem
+                      .containsKey(widget.productData['productId'])
+                  ? Colors.grey
+                  : FlexColor.mandyRedLightPrimary,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   CupertinoIcons.cart,
                   color: Colors.white,
                   size: 35,
                 ),
                 Gap(15),
-                Text(
-                  "Add To Cart",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 3,
-                  ),
-                ),
+                _cartProvider.getCartItem
+                        .containsKey(widget.productData['productId'])
+                    ? const Text(
+                        "In Cart",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          letterSpacing: 3,
+                        ),
+                      )
+                    : const Text(
+                        "Add To Cart",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          letterSpacing: 3,
+                        ),
+                      ),
               ],
             ),
           ),

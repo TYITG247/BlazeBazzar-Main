@@ -1,3 +1,4 @@
+import 'package:blazebazzar/buyers/views/nav_screens/category_screen.dart';
 import 'package:blazebazzar/config/app_theme.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 import 'package:blazebazzar/buyers/views/nav_screens/widgets/home_products.dart';
@@ -68,7 +69,11 @@ class _CategoryTextState extends State<CategoryText> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return CategoryScreen();
+                        }));
+                      },
                       icon: Icon(Icons.arrow_forward_ios_rounded),
                     ),
                   ],

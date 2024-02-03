@@ -194,21 +194,25 @@ class _CartScreenState extends State<CartScreen> {
       bottomSheet: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return CheckoutScreen();
+          onTap: _cartProvider.totalPrice == 0.00
+              ? null
+              : () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return CheckoutScreen();
+                      },
+                    ),
+                  );
                 },
-              ),
-            );
-          },
           child: Container(
             height: 50,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: FlexColor.mandyRedLightPrimary,
+              color: _cartProvider.totalPrice == 0.00
+                  ? Colors.grey
+                  : FlexColor.mandyRedLightPrimary,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Row(
