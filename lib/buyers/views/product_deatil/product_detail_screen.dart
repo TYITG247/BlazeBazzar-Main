@@ -162,16 +162,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: OutlinedButton(
-                            onPressed: () {
-                              setState(() {
-                                _selectedSize =
-                                    widget.productData['sizeList'][index];
-                              });
-                              print(_selectedSize);
-                            },
-                            child: Text(
-                              widget.productData['sizeList'][index],
+                          child: Container(
+                            decoration: _selectedSize ==
+                                    widget.productData['sizeList'][index]
+                                ? BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color:
+                                        FlexColor.mandyRedLightPrimaryContainer,
+                                  )
+                                : null,
+                            child: OutlinedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _selectedSize =
+                                      widget.productData['sizeList'][index];
+                                });
+                                print(_selectedSize);
+                              },
+                              child: Text(
+                                widget.productData['sizeList'][index],
+                              ),
                             ),
                           ),
                         );
@@ -189,9 +199,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () {
-            if(_selectedSize == null){
+            if (_selectedSize == null) {
               showSnack(context, "Please select a Size");
-            }else{
+            } else {
               _cartProvider.addProductToCart(
                 widget.productData['productName'],
                 widget.productData['productId'],
