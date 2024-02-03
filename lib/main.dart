@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:blazebazzar/buyers/views/main_screen.dart';
 import 'package:blazebazzar/providers/cart_provider.dart';
 import 'package:blazebazzar/providers/product_provider.dart';
 import 'package:blazebazzar/seller/views/screens/main_seller_screen.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         theme: CustomLightTheme(),
         // darkTheme: CustomDarkTheme(),
         // themeMode: ThemeMode.system,
-        home: LoginScreen(),
+        home: MainScreen(),
       builder: EasyLoading.init(),
         );
   }

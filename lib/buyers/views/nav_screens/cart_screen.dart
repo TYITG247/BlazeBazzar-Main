@@ -16,6 +16,7 @@ class _CartScreenState extends State<CartScreen> {
     final CartProvider _cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        elevation: 1,
         title: Text(
           "Shopping Cart",
           style: TextStyle(

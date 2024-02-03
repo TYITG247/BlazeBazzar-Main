@@ -34,7 +34,14 @@ class _AccountScreenState extends State<AccountScreen> {
               snapshot.data!.data() as Map<String, dynamic>;
           return Scaffold(
             appBar: AppBar(
-              title: Text("Profile"),
+              elevation: 1,
+              title: Text(
+                "Profile",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
               centerTitle: true,
             ),
             body: Padding(
