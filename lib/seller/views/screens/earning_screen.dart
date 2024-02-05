@@ -85,8 +85,8 @@ class EarningScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          height: 150,
-                          width: MediaQuery.of(context).size.width * 0.5,
+                          height: 200,
+                          width: MediaQuery.of(context).size.width * 0.6,
                           decoration: BoxDecoration(
                             color: FlexColor.mandyRedLightPrimary,
                             borderRadius: BorderRadius.circular(20),
@@ -94,6 +94,7 @@ class EarningScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -110,6 +111,7 @@ class EarningScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     "₹" + totalOrderEarning.toStringAsFixed(2),
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 28,
                                       color: Colors.white,
