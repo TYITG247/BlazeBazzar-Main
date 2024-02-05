@@ -116,9 +116,9 @@ class UploadScreen extends StatelessWidget {
                     'approved': false,
                   }).whenComplete(
                     () {
+                      EasyLoading.dismiss();
                       _productProvider.clearData();
                       _formKey.currentState!.reset();
-                      EasyLoading.dismiss();
                       Navigator.push(
                         context,
                         MaterialPageRoute(

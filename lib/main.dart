@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:blazebazzar/buyers/views/main_screen.dart';
 import 'package:blazebazzar/providers/cart_provider.dart';
 import 'package:blazebazzar/providers/product_provider.dart';
+import 'package:blazebazzar/seller/views/authentication/seller_authentication_screen.dart';
 import 'package:blazebazzar/seller/views/screens/main_seller_screen.dart';
 import 'package:blazebazzar/buyers/views/authentication/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         theme: CustomLightTheme(),
         // darkTheme: CustomDarkTheme(),
         // themeMode: ThemeMode.system,
-        home: LoginScreen(),
+        home: SellerAuthenticationScreen(),
       builder: EasyLoading.init(),
         );
   }
