@@ -139,7 +139,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             _firestore.collection('orders').doc(orderId).set(
                               {
                                 'orderId': orderId,
-                                'vendorId': item.sellerId,
+                                'sellerId': item.sellerId,
                                 'email': data['email'],
                                 'phone': data['phone'],
                                 'address': data['address'],
