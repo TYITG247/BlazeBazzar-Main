@@ -2,6 +2,7 @@ import 'package:blazebazzar/buyers/views/authentication/login_screen.dart';
 import 'package:blazebazzar/buyers/views/inner_screens/edit_profile.dart';
 import 'package:blazebazzar/buyers/views/inner_screens/order_screen.dart';
 import 'package:blazebazzar/config/app_ui.dart';
+import 'package:blazebazzar/connector_screen/switch_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -235,7 +236,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return LoginScreen();
+                                      return SwitchScreen();
                                     },
                                   ),
                                 );

@@ -1,4 +1,5 @@
 import 'package:blazebazzar/config/app_ui.dart';
+import 'package:blazebazzar/connector_screen/switch_screen.dart';
 import 'package:blazebazzar/seller/views/authentication/seller_authentication_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -143,7 +144,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return SellerAuthenticationScreen();
+                                return SwitchScreen();
                               },
                             ),
                           );
