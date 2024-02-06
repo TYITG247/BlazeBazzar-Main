@@ -1,5 +1,6 @@
 import 'package:blazebazzar/buyers/views/authentication/login_screen.dart';
 import 'package:blazebazzar/buyers/views/inner_screens/edit_profile.dart';
+import 'package:blazebazzar/buyers/views/inner_screens/order_screen.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -129,6 +130,16 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ),
                   ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return OrderScreen();
+                          },
+                        ),
+                      );
+                    },
                     leading: Icon(CupertinoIcons.doc_text_fill),
                     title: Text(
                       "Orders",

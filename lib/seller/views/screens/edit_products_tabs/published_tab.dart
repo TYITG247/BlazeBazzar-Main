@@ -42,6 +42,42 @@ class PublishedTab extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final sellerProductsData = snapshot.data!.docs[index];
                       return Slidable(
+                        key: const ValueKey(0),
+                        startActionPane: ActionPane(
+                          motion: const ScrollMotion(),
+                          children: [
+                            SlidableAction(
+                              flex: 2,
+                              onPressed: (context) async {
+                                await _firestore
+                                    .collection('products')
+                                    .doc(sellerProductsData['productId'])
+                                    .update(
+                                  {
+                                    'approved': false,
+                                  },
+                                );
+                              },
+                              backgroundColor: Color(0xFF21B7CA),
+                              foregroundColor: Colors.white,
+                              icon: Icons.block_rounded,
+                              label: "Decline",
+                            ),
+                            SlidableAction(
+                              flex: 2,
+                              onPressed: (context) async {
+                                await _firestore
+                                    .collection('products')
+                                    .doc(sellerProductsData['productId'])
+                                    .delete();
+                              },
+                              backgroundColor: Color(0xFFFE4A49),
+                              foregroundColor: Colors.white,
+                              icon: Icons.delete_rounded,
+                              label: 'Delete',
+                            ),
+                          ],
+                        ),
                         child: InkWell(
                           onTap: () {
                             Navigator.push(
@@ -91,42 +127,6 @@ class PublishedTab extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                        key: const ValueKey(0),
-                        startActionPane: ActionPane(
-                          motion: DrawerMotion(),
-                          children: [
-                            SlidableAction(
-                              flex: 2,
-                              onPressed: (context) async {
-                                await _firestore
-                                    .collection('products')
-                                    .doc(sellerProductsData['productId'])
-                                    .update(
-                                  {
-                                    'approved': false,
-                                  },
-                                );
-                              },
-                              backgroundColor: Color(0xFF21B7CA),
-                              foregroundColor: Colors.white,
-                              icon: Icons.block_rounded,
-                              label: "Decline",
-                            ),
-                            SlidableAction(
-                              flex: 2,
-                              onPressed: (context) async {
-                                await _firestore
-                                    .collection('products')
-                                    .doc(sellerProductsData['productId'])
-                                    .delete();
-                              },
-                              backgroundColor: Color(0xFFFE4A49),
-                              foregroundColor: Colors.white,
-                              icon: Icons.delete_rounded,
-                              label: 'Delete',
-                            ),
-                          ],
                         ),
                       );
                     },

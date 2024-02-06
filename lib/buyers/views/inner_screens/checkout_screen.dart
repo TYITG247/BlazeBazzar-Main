@@ -153,6 +153,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 'productSize': item.productSize,
                                 'scheduleDate': item.scheduleDate,
                                 'orderDate': DateTime.now(),
+                                'accepted': false,
                               },
                             ).whenComplete(
                               () {
