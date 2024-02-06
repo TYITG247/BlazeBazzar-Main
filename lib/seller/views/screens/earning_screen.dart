@@ -1,7 +1,7 @@
 import 'package:blazebazzar/config/app_ui.dart';
+import 'package:blazebazzar/seller/views/screens/seller_inner_screens/withdrawal_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart';
 
 class EarningScreen extends StatelessWidget {
   const EarningScreen({super.key});
@@ -38,7 +38,7 @@ class EarningScreen extends StatelessWidget {
                     child: Center(
                       child: Text(
                         '${data['businessName'][0]}'.capitalize,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 26,
                         ),
@@ -48,7 +48,7 @@ class EarningScreen extends StatelessWidget {
                   Gap(15),
                   Text(
                     "Hi, " + data['businessName'],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -64,7 +64,7 @@ class EarningScreen extends StatelessWidget {
                 }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(
                       color: Colors.white,
                     ),
@@ -86,7 +86,7 @@ class EarningScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          height: 150,
+                          height: 180,
                           width: MediaQuery.of(context).size.width - 10,
                           decoration: BoxDecoration(
                             color: FlexColor.mandyRedLightPrimary,
@@ -97,13 +97,13 @@ class EarningScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
                                   child: Row(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 8, top: 4),
+                                        padding:
+                                            EdgeInsets.only(right: 8, top: 4),
                                         child: Icon(
                                           Icons.account_balance_wallet_rounded,
                                           color: Colors.white,
@@ -126,12 +126,51 @@ class EarningScreen extends StatelessWidget {
                                   child: Text(
                                     "₹${totalOrderEarning.toStringAsFixed(2)}",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 28,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       letterSpacing: 4,
                                     ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 8, left: 8),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                return WithdrawalScreen();
+                                              },
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          height: 50,
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              "WithDraw",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -153,12 +192,13 @@ class EarningScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
                                   child: Row(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(right: 8, top: 4),
+                                        padding:
+                                            EdgeInsets.only(right: 8, top: 4),
                                         child: Icon(
                                           Icons.shopping_cart_rounded,
                                           color: Colors.white,
@@ -181,7 +221,7 @@ class EarningScreen extends StatelessWidget {
                                   child: Text(
                                     totalOrder.toString(),
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 28,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -201,7 +241,7 @@ class EarningScreen extends StatelessWidget {
             ),
           );
         }
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }
