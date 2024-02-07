@@ -20,7 +20,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   String? _selectedSize;
 
   String formattedDate(date) {
-    final outputDateFormat = DateFormat("DD-MM-yyyy");
+    final outputDateFormat = DateFormat("dd-MM-yyyy");
     final outputDate = outputDateFormat.format(date);
     return outputDate;
   }
@@ -153,6 +153,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 title: Text(
                   "Available Sizes",
                 ),
+                initiallyExpanded: true,
                 children: [
                   Container(
                     height: 50,

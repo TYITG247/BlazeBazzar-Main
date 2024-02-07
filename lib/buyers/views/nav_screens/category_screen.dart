@@ -62,7 +62,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         );
                       },
                       child: CircleAvatar(
-                        radius: 52,
+                        radius: 40,
                         backgroundImage: NetworkImage(categoryData['image']),
                       ),
                     ),

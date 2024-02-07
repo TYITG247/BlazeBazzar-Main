@@ -48,8 +48,8 @@ class HomeProducts extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          height: 180,
-                          width: 200,
+                          height: 200,
+                          width: 150,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image:

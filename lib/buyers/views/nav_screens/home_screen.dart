@@ -1,6 +1,5 @@
 import 'package:blazebazzar/buyers/views/nav_screens/widgets/banner_widget.dart';
 import 'package:blazebazzar/buyers/views/nav_screens/widgets/category_text.dart';
-import 'widgets/search_input_widget.dart';
 import 'widgets/welcome_text_widget.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 
@@ -26,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const WelcomeText(),
             const Gap(10),
-            const SearchInputWidget(),
             BannerWidget(),
             CategoryText(),
           ],

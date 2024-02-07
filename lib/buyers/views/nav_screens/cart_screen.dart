@@ -1,4 +1,5 @@
 import 'package:blazebazzar/buyers/views/inner_screens/checkout_screen.dart';
+import 'package:blazebazzar/buyers/views/main_screen.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 import 'package:blazebazzar/providers/cart_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -173,7 +174,16 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                   Gap(15),
                   InkWell(
-                    onTap: (){},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MainScreen();
+                          },
+                        ),
+                      );
+                    },
                     child: Container(
                       height: 40,
                       width: MediaQuery.of(context).size.width - 40,

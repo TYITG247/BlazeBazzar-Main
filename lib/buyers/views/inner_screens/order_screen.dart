@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 class OrderScreen extends StatelessWidget {
   String formattedDate(date) {
-    final outputDateFormat = DateFormat("DD-MM-yyyy");
+    final outputDateFormat = DateFormat("dd-MM-yyyy");
     final outputDate = outputDateFormat.format(date);
     return outputDate;
   }

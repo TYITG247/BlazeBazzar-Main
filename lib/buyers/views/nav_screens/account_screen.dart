@@ -171,7 +171,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           },
                           child: Container(
                             height: 40,
-                            width: MediaQuery.of(context).size.width - 300,
+                            width: MediaQuery.of(context).size.width - 250,
                             decoration: BoxDecoration(
                               color: FlexColor.mandyRedLightPrimaryContainer,
                               borderRadius: BorderRadius.circular(20),
@@ -179,6 +179,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             child: Center(
                               child: Text(
                                 "Edit Profile",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
