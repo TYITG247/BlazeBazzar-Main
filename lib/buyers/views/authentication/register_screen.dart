@@ -11,6 +11,19 @@ class BuyerRegisterScreen extends StatefulWidget {
 
 class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
   bool _isSecurePassword = true;
+  bool _isPasswordEightCharacters = false;
+  bool _hadPasswordOneNumber = false;
+
+  onPasswordChanged(String password) {
+    final numericRegex = RegExp(r'[0-9]');
+    setState(() {
+      _isPasswordEightCharacters = false;
+      if (password.length >= 8) _isPasswordEightCharacters = true;
+      _hadPasswordOneNumber = false;
+      if (numericRegex.hasMatch(password)) _hadPasswordOneNumber = true;
+    });
+  }
+
   final AuthenticationController _authenticationController =
       AuthenticationController();
 
@@ -48,16 +61,19 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
       showSnack(context, "Fields cannot be empty");
     }
   }
-  Widget togglePassword(){
-    return IconButton(onPressed: (){
-      setState(() {
-        _isSecurePassword = !_isSecurePassword;
 
-      });
-
-    }, icon: _isSecurePassword ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
-      color:Colors.grey,);
-
+  Widget togglePassword() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _isSecurePassword = !_isSecurePassword;
+        });
+      },
+      icon: _isSecurePassword
+          ? Icon(Icons.visibility)
+          : Icon(Icons.visibility_off),
+      color: Colors.grey,
+    );
   }
 
   @override
@@ -131,8 +147,8 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                             return "Email cannot be Empty";
                           } else {
                             return RegExp(
-                                r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-                                .hasMatch(value)
+                                        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                                    .hasMatch(value)
                                 ? null
                                 : "Enter a valid Email.";
                           }
@@ -155,7 +171,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                             return "Name cannot be Empty";
                           } else {
                             return RegExp(r'^[a-zA-Z]+(?:\s+[a-zA-Z]+)*$')
-                                .hasMatch(value)
+                                    .hasMatch(value)
                                 ? null
                                 : "Enter a valid Name.";
                           }
@@ -192,16 +208,14 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                           left: 20, top: 8, right: 20, bottom: 8),
                       child: TextFormField(
                         obscureText: _isSecurePassword,
-                        onChanged: (value) {
-                          password = value;
-                        },
+                        onChanged: (password) => onPasswordChanged(password),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Password cannot be Empty";
                           } else {
                             return RegExp(
-                                r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$')
-                                .hasMatch(value)
+                                        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$')
+                                    .hasMatch(value)
                                 ? null
                                 : "Enter a valid Password.";
                           }
@@ -212,6 +226,50 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                         ),
                       ),
                     ),
+                    Gap(15),
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 200),
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                          color: _isPasswordEightCharacters
+                              ? Colors.green
+                              : Colors.transparent,
+                          border: _isPasswordEightCharacters
+                              ? Border.all(color: Colors.transparent)
+                              : Border.all(color: Colors.grey.shade400),
+                          borderRadius: BorderRadius.circular(50)),
+                      child: Center(
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                      ),
+                    ),
+                    Text("contanis at least 8 characters"),
+                    Gap(20),
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 200),
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                          color: _hadPasswordOneNumber
+                              ? Colors.green
+                              : Colors.transparent,
+                          border: _hadPasswordOneNumber
+                              ? Border.all(color: Colors.transparent)
+                              : Border.all(color: Colors.grey.shade400),
+                          borderRadius: BorderRadius.circular(50)),
+                      child: Center(
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                      ),
+                    ),
+                    Text("contanis at least 1 numbers"),
                     Gap(20),
                     GestureDetector(
                       onTap: () {
@@ -227,16 +285,16 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                         child: Center(
                           child: _isLoading
                               ? CircularProgressIndicator(
-                            color: Colors.white,
-                          )
+                                  color: Colors.white,
+                                )
                               : Text(
-                            "Register",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 5),
-                          ),
+                                  "Register",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 5),
+                                ),
                         ),
                       ),
                     ),
