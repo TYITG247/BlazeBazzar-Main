@@ -10,6 +10,7 @@ class BuyerRegisterScreen extends StatefulWidget {
 }
 
 class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
+  bool _isSecurePassword = true;
   final AuthenticationController _authenticationController =
       AuthenticationController();
 
@@ -46,6 +47,17 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
       });
       showSnack(context, "Fields cannot be empty");
     }
+  }
+  Widget togglePassword(){
+    return IconButton(onPressed: (){
+      setState(() {
+        _isSecurePassword = !_isSecurePassword;
+
+      });
+
+    }, icon: _isSecurePassword ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+      color:Colors.grey,);
+
   }
 
   @override
@@ -179,7 +191,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                       padding: const EdgeInsets.only(
                           left: 20, top: 8, right: 20, bottom: 8),
                       child: TextFormField(
-                        obscureText: true,
+                        obscureText: _isSecurePassword,
                         onChanged: (value) {
                           password = value;
                         },
@@ -195,6 +207,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                           }
                         },
                         decoration: InputDecoration(
+                          suffixIcon: togglePassword(),
                           labelText: "Password",
                         ),
                       ),

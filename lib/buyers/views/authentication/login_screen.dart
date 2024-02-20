@@ -11,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _isSecurePassword = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthenticationController _authenticationController =
       AuthenticationController();
