@@ -1,3 +1,4 @@
+import 'package:blazebazzar/buyers/views/nav_screens/cart_screen.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 import 'package:blazebazzar/providers/cart_provider.dart';
 import 'package:blazebazzar/utils/show_snackbar.dart';
@@ -31,6 +32,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.productData['productName']),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return CartScreen();
+                  },
+                ),
+              );
+            },
+            icon: Icon(
+              CupertinoIcons.shopping_cart,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

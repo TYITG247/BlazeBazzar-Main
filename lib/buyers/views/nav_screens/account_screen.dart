@@ -101,11 +101,93 @@ class _AccountScreenState extends State<AccountScreen> {
             builder: (BuildContext context,
                 AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasError) {
-                return Text("Something went wrong");
+                return Center(
+                  child: Text(
+                    "Its not you, Its Us",
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                );
               }
 
               if (snapshot.hasData && !snapshot.data!.exists) {
-                return Text("Document does not exist");
+                return Scaffold(
+                  appBar: AppBar(
+                    elevation: 5,
+                    title: Text(
+                      "Profile",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    ),
+                    centerTitle: true,
+                  ),
+                  body: Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Column(
+                      children: [
+                        Gap(25),
+                        Center(
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundColor:
+                                FlexColor.mandyRedLightPrimaryContainer,
+                            child: Center(
+                              child: Icon(
+                                Icons.person_rounded,
+                                color: Colors.white,
+                                size: 60,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Gap(25),
+                        Text(
+                          'Login To Access Profile',
+                          style: TextStyle(
+                            fontSize: 22,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Gap(20),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return LoginScreen();
+                                },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 50,
+                            width: MediaQuery.of(context).size.width - 100,
+                            decoration: BoxDecoration(
+                              color: FlexColor.mandyRedLightPrimary,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Login Account",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 4,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Gap(15),
+                      ],
+                    ),
+                  ),
+                );
               }
 
               if (snapshot.connectionState == ConnectionState.done) {
