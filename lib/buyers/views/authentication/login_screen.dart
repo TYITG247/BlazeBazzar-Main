@@ -48,6 +48,17 @@ class _LoginScreenState extends State<LoginScreen> {
       return showSnack(context, "Fields cannot be Empty");
     }
   }
+  Widget togglePassword(){
+    return IconButton(onPressed: (){
+      setState(() {
+        _isSecurePassword = !_isSecurePassword;
+
+      });
+
+    }, icon: _isSecurePassword ? Icon(Icons.visibility_off_rounded) : Icon(Icons.visibility_rounded),
+      color:Colors.grey,);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 20, top: 8, right: 20, bottom: 8),
                       child: TextFormField(
-                        obscureText: true,
+                        obscureText: _isSecurePassword,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Password cannot be Empty";
@@ -148,6 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           password = value;
                         },
                         decoration: InputDecoration(
+                          suffixIcon: togglePassword(),
                           labelText: "Enter Password",
                         ),
                       ),
