@@ -55,7 +55,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
 
       });
 
-    }, icon: _isSecurePassword ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+    }, icon: _isSecurePassword ? Icon(Icons.visibility_off_rounded) : Icon(Icons.visibility_rounded),
       color:Colors.grey,);
 
   }
