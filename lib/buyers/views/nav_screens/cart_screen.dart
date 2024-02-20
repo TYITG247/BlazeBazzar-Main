@@ -15,11 +15,12 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    final CartProvider _cartProvider = Provider.of<CartProvider>(context);
+    final screenSize = MediaQuery.of(context).size;
+    final CartProvider cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
-        title: Text(
+        title: const Text(
           "Shopping Cart",
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -29,7 +30,7 @@ class _CartScreenState extends State<CartScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              _cartProvider.removeAllItem();
+              cartProvider.removeAllItem();
             },
             icon: Icon(
               CupertinoIcons.delete_solid,
@@ -38,16 +39,16 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ],
       ),
-      body: _cartProvider.getCartItem.isNotEmpty
+      body: cartProvider.getCartItem.isNotEmpty
           ? ListView.builder(
               shrinkWrap: true,
-              itemCount: _cartProvider.getCartItem.length,
+              itemCount: cartProvider.getCartItem.length,
               itemBuilder: (context, index) {
                 final cartData =
-                    _cartProvider.getCartItem.values.toList()[index];
+                    cartProvider.getCartItem.values.toList()[index];
                 return Card(
                   child: SizedBox(
-                    height: 200,
+                    height: screenSize.height / 4,
                     child: Row(
                       children: [
                         Padding(
@@ -61,21 +62,21 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.only(top: 20, left: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 cartData.productName,
-                                style: TextStyle(
-                                  fontSize: 22,
+                                style: const TextStyle(
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 5,
                                 ),
                               ),
                               Text(
-                                "₹" + cartData.price.toStringAsFixed(2),
-                                style: TextStyle(
+                                "₹${cartData.price.toStringAsFixed(2)}",
+                                style: const TextStyle(
                                   fontSize: 22,
                                   color: FlexColor.mandyRedLightPrimary,
                                   fontWeight: FontWeight.bold,
@@ -105,17 +106,17 @@ class _CartScreenState extends State<CartScreen> {
                                           onPressed: cartData.quantity == 1
                                               ? null
                                               : () {
-                                                  _cartProvider
+                                                  cartProvider
                                                       .decrement(cartData);
                                                 },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             CupertinoIcons.minus,
                                             color: Colors.white,
                                           ),
                                         ),
                                         Text(
                                           cartData.quantity.toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 18,
                                           ),
@@ -125,10 +126,10 @@ class _CartScreenState extends State<CartScreen> {
                                                   cartData.quantity
                                               ? null
                                               : () {
-                                                  _cartProvider
+                                                  cartProvider
                                                       .increment(cartData);
                                                 },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             CupertinoIcons.plus,
                                             color: Colors.white,
                                           ),
@@ -136,14 +137,14 @@ class _CartScreenState extends State<CartScreen> {
                                       ],
                                     ),
                                   ),
-                                  Gap(30),
+                                  const Gap(30),
                                   IconButton(
                                     onPressed: () {
-                                      _cartProvider.removeItem(
+                                      cartProvider.removeItem(
                                         cartData.productId,
                                       );
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       CupertinoIcons.cart_fill_badge_minus,
                                     ),
                                   ),
@@ -172,14 +173,14 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  Gap(15),
+                  const Gap(15),
                   InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return MainScreen();
+                            return const MainScreen();
                           },
                         ),
                       );
@@ -191,7 +192,7 @@ class _CartScreenState extends State<CartScreen> {
                         color: FlexColor.mandyRedLightPrimary,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Continue Shopping",
                           style: TextStyle(
@@ -209,14 +210,14 @@ class _CartScreenState extends State<CartScreen> {
       bottomSheet: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
-          onTap: _cartProvider.totalPrice == 0.00
+          onTap: cartProvider.totalPrice == 0.00
               ? null
               : () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return CheckoutScreen();
+                        return const CheckoutScreen();
                       },
                     ),
                   );
@@ -225,7 +226,7 @@ class _CartScreenState extends State<CartScreen> {
             height: 50,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: _cartProvider.totalPrice == 0.00
+              color: cartProvider.totalPrice == 0.00
                   ? Colors.grey
                   : FlexColor.mandyRedLightPrimary,
               borderRadius: BorderRadius.circular(15),
@@ -233,7 +234,7 @@ class _CartScreenState extends State<CartScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   "Checkout",
                   style: TextStyle(
                       fontSize: 24,
@@ -241,10 +242,10 @@ class _CartScreenState extends State<CartScreen> {
                       fontWeight: FontWeight.bold,
                       letterSpacing: 4),
                 ),
-                Gap(15),
+                const Gap(15),
                 Text(
-                  "₹" + _cartProvider.totalPrice.toStringAsFixed(2),
-                  style: TextStyle(
+                  "₹${cartProvider.totalPrice.toStringAsFixed(2)}",
+                  style: const TextStyle(
                       fontSize: 24,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

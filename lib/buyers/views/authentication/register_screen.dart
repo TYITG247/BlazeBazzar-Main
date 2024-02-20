@@ -10,34 +10,19 @@ class BuyerRegisterScreen extends StatefulWidget {
 }
 
 class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
-  bool _isSecurePassword = true;
-  bool _isPasswordEightCharacters = false;
-  bool _hadPasswordOneNumber = false;
-
-  onPasswordChanged(String password) {
-    final numericRegex = RegExp(r'[0-9]');
-    setState(() {
-      _isPasswordEightCharacters = false;
-      if (password.length >= 8) _isPasswordEightCharacters = true;
-      _hadPasswordOneNumber = false;
-      if (numericRegex.hasMatch(password)) _hadPasswordOneNumber = true;
-    });
-  }
-
   final AuthenticationController _authenticationController =
       AuthenticationController();
-
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   late String email;
-
   late String fullName;
-
   late String phoneNumber;
-
   late String password;
 
   bool _isLoading = false;
+  bool _isSecurePassword = true;
+  bool _isPasswordEightCharacters = false;
+  bool _hadPasswordOneNumber = false;
 
   _registerUser() async {
     setState(() {
@@ -70,10 +55,20 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
         });
       },
       icon: _isSecurePassword
-          ? Icon(Icons.visibility)
-          : Icon(Icons.visibility_off),
+          ? const Icon(Icons.visibility_rounded)
+          : const Icon(Icons.visibility_off_rounded),
       color: Colors.grey,
     );
+  }
+
+  onPasswordChanged(String password) {
+    final numericRegex = RegExp(r'[0-9]');
+    setState(() {
+      _isPasswordEightCharacters = false;
+      if (password.length >= 8) _isPasswordEightCharacters = true;
+      _hadPasswordOneNumber = false;
+      if (numericRegex.hasMatch(password)) _hadPasswordOneNumber = true;
+    });
   }
 
   @override
@@ -153,7 +148,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                                 : "Enter a valid Email.";
                           }
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Enter Email",
                         ),
                       ),
@@ -176,7 +171,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                                 : "Enter a valid Name.";
                           }
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Enter Full Name",
                         ),
                       ),
@@ -198,7 +193,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                                 : "Enter a valid Phone Number.";
                           }
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Enter Phone Number",
                         ),
                       ),
@@ -226,9 +221,9 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                         ),
                       ),
                     ),
-                    Gap(15),
+                    const Gap(15),
                     AnimatedContainer(
-                      duration: Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 200),
                       width: 20,
                       height: 20,
                       decoration: BoxDecoration(
@@ -239,7 +234,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                               ? Border.all(color: Colors.transparent)
                               : Border.all(color: Colors.grey.shade400),
                           borderRadius: BorderRadius.circular(50)),
-                      child: Center(
+                      child: const Center(
                         child: Icon(
                           Icons.check,
                           color: Colors.white,
@@ -247,10 +242,10 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                         ),
                       ),
                     ),
-                    Text("contanis at least 8 characters"),
-                    Gap(20),
+                    const Text("contanis at least 8 characters"),
+                    const Gap(20),
                     AnimatedContainer(
-                      duration: Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 200),
                       width: 20,
                       height: 20,
                       decoration: BoxDecoration(
@@ -261,7 +256,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                               ? Border.all(color: Colors.transparent)
                               : Border.all(color: Colors.grey.shade400),
                           borderRadius: BorderRadius.circular(50)),
-                      child: Center(
+                      child: const Center(
                         child: Icon(
                           Icons.check,
                           color: Colors.white,
@@ -269,8 +264,8 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                         ),
                       ),
                     ),
-                    Text("contanis at least 1 numbers"),
-                    Gap(20),
+                    const Text("contanis at least 1 numbers"),
+                    const Gap(20),
                     GestureDetector(
                       onTap: () {
                         _registerUser();
@@ -284,10 +279,10 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                         ),
                         child: Center(
                           child: _isLoading
-                              ? CircularProgressIndicator(
+                              ? const CircularProgressIndicator(
                                   color: Colors.white,
                                 )
-                              : Text(
+                              : const Text(
                                   "Register",
                                   style: TextStyle(
                                       color: Colors.white,
@@ -301,12 +296,12 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Already have an account?,",
                           style: TextStyle(fontSize: 16),
                         ),
                         CupertinoButton(
-                          child: Text("Log In"),
+                          child: const Text("Log In"),
                           onPressed: () {
                             Navigator.push(
                               context,
