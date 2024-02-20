@@ -12,6 +12,7 @@ class AllProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     final Stream<QuerySnapshot> _productsStream = FirebaseFirestore.instance
         .collection('products')
         .where(

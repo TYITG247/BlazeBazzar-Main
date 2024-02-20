@@ -11,14 +11,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _isSecurePassword = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthenticationController _authenticationController =
       AuthenticationController();
-  late String email;
 
+  late String email;
   late String password;
+
   bool _isLoading = false;
+  bool _isSecurePassword = true;
+
   _loginUser() async {
     setState(() {
       _isLoading = true;
@@ -48,27 +50,31 @@ class _LoginScreenState extends State<LoginScreen> {
       return showSnack(context, "Fields cannot be Empty");
     }
   }
-  Widget togglePassword(){
-    return IconButton(onPressed: (){
-      setState(() {
-        _isSecurePassword = !_isSecurePassword;
 
-      });
-
-    }, icon: _isSecurePassword ? Icon(Icons.visibility_off_rounded) : Icon(Icons.visibility_rounded),
-      color:Colors.grey,);
-
+  Widget togglePassword() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _isSecurePassword = !_isSecurePassword;
+        });
+      },
+      icon: _isSecurePassword
+          ? const Icon(Icons.visibility_off_rounded)
+          : const Icon(Icons.visibility_rounded),
+      color: Colors.grey,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      body:CustomScrollView(
+      body: CustomScrollView(
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
             backgroundColor: FlexColor.pinkM3LightPrimary,
-            toolbarHeight: 250,
+            toolbarHeight: screenSize.height / 3,
             flexibleSpace: LayoutBuilder(builder: (context, constraints) {
               return FlexibleSpaceBar(
                 background: Container(
@@ -119,15 +125,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, top: 8, right: 20, bottom: 8),
+                      padding: const EdgeInsets.only(
+                          left: 20, top: 8, right: 20, bottom: 8),
                       child: TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Email cannot be Empty";
                           } else {
                             return RegExp(
-                                r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-                                .hasMatch(value)
+                                        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                                    .hasMatch(value)
                                 ? null
                                 : "Enter a valid Email.";
                           }
@@ -135,13 +142,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         onChanged: (value) {
                           email = value;
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Enter E-mail Address",
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, top: 8, right: 20, bottom: 8),
+                      padding: const EdgeInsets.only(
+                          left: 20, top: 8, right: 20, bottom: 8),
                       child: TextFormField(
                         obscureText: _isSecurePassword,
                         validator: (value) {
@@ -149,8 +157,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             return "Password cannot be Empty";
                           } else {
                             return RegExp(
-                                r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$')
-                                .hasMatch(value)
+                                        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$')
+                                    .hasMatch(value)
                                 ? null
                                 : "Enter a valid Password.";
                           }
@@ -164,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    Gap(20),
+                    const Gap(20),
                     InkWell(
                       onTap: () {
                         _loginUser();
@@ -178,24 +186,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: Center(
                           child: _isLoading
-                              ? CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                              : Text(
-                            "Log In",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 5),
-                          ),
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : const Text(
+                                  "Log In",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 5),
+                                ),
                         ),
                       ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Need an account?,",
                           style: TextStyle(fontSize: 16),
                         ),

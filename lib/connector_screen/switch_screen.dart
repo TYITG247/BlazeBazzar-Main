@@ -7,13 +7,14 @@ class SwitchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
             backgroundColor: FlexColor.pinkM3LightPrimary,
-            toolbarHeight: 550,
+            toolbarHeight: screenSize.height / 1.5,
             flexibleSpace: LayoutBuilder(builder: (context, constraints) {
               return FlexibleSpaceBar(
                 background: Container(
@@ -57,85 +58,85 @@ class SwitchScreen extends StatelessWidget {
             }),
           ),
           SliverToBoxAdapter(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Gap(50),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return LoginScreen();
-                          },
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width - 80,
-                      decoration: BoxDecoration(
-                        color: FlexColor.mandyRedLightPrimary,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Buyer",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 5,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return LoginScreen();
+                            },
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return SellerAuthenticationScreen();
-                          },
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width - 80,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
+                        );
+                      },
+                      child: Container(
+                        height: screenSize.height / 16,
+                        width: screenSize.width - 80,
+                        decoration: BoxDecoration(
+                          color: FlexColor.mandyRedLightPrimary,
                           borderRadius: BorderRadius.circular(15),
-                          border: const Border(
-                            top: BorderSide(),
-                            bottom: BorderSide(),
-                            right: BorderSide(),
-                            left: BorderSide(),
-                          )),
-                      child: Center(
-                        child: Text(
-                          "Seller",
-                          style: TextStyle(
-                            color: FlexColor.mandyRedLightPrimary,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 5,
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Buyer",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 5,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return SellerAuthenticationScreen();
+                            },
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: screenSize.height / 16,
+                        width: screenSize.width - 80,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            border: const Border(
+                              top: BorderSide(),
+                              bottom: BorderSide(),
+                              right: BorderSide(),
+                              left: BorderSide(),
+                            )),
+                        child: const Center(
+                          child: Text(
+                            "Seller",
+                            style: TextStyle(
+                              color: FlexColor.mandyRedLightPrimary,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 5,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

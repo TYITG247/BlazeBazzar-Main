@@ -23,6 +23,8 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
   bool _isSecurePassword = true;
   bool _isPasswordEightCharacters = false;
   bool _hadPasswordOneNumber = false;
+  bool _hadPasswordSpecialCharacter = false;
+  bool _hadPasswordAlphabet = false;
 
   _registerUser() async {
     setState(() {
@@ -55,31 +57,44 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
         });
       },
       icon: _isSecurePassword
-          ? const Icon(Icons.visibility_rounded)
-          : const Icon(Icons.visibility_off_rounded),
+          ? const Icon(Icons.visibility_off_rounded)
+          : const Icon(Icons.visibility_rounded),
       color: Colors.grey,
     );
   }
 
   onPasswordChanged(String password) {
     final numericRegex = RegExp(r'[0-9]');
-    setState(() {
-      _isPasswordEightCharacters = false;
-      if (password.length >= 8) _isPasswordEightCharacters = true;
-      _hadPasswordOneNumber = false;
-      if (numericRegex.hasMatch(password)) _hadPasswordOneNumber = true;
-    });
+    final specialCharacterRegex = RegExp(r'\W');
+    final alphabetRegex = RegExp(r'(?=.*[a-z])(?=.*[A-Z])');
+    setState(
+      () {
+        _isPasswordEightCharacters = false;
+        if (password.length >= 8) _isPasswordEightCharacters = true;
+        _hadPasswordOneNumber = false;
+        if (numericRegex.hasMatch(password)) _hadPasswordOneNumber = true;
+        _hadPasswordSpecialCharacter = false;
+        if (specialCharacterRegex.hasMatch(password)) {
+          _hadPasswordSpecialCharacter = true;
+        }
+        _hadPasswordAlphabet = false;
+        if (alphabetRegex.hasMatch(password)) {
+          _hadPasswordAlphabet = true;
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
             backgroundColor: FlexColor.pinkM3LightPrimary,
-            toolbarHeight: 200,
+            toolbarHeight: screenSize.height / 3.5,
             flexibleSpace: LayoutBuilder(builder: (context, constraints) {
               return FlexibleSpaceBar(
                 background: Container(
@@ -203,7 +218,10 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                           left: 20, top: 8, right: 20, bottom: 8),
                       child: TextFormField(
                         obscureText: _isSecurePassword,
-                        onChanged: (password) => onPasswordChanged(password),
+                        onChanged: (value){
+                          onPasswordChanged(value);
+                          password = value;
+                        },
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Password cannot be Empty";
@@ -222,49 +240,133 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                       ),
                     ),
                     const Gap(15),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                          color: _isPasswordEightCharacters
-                              ? Colors.green
-                              : Colors.transparent,
-                          border: _isPasswordEightCharacters
-                              ? Border.all(color: Colors.transparent)
-                              : Border.all(color: Colors.grey.shade400),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: const Center(
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          size: 15,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Gap(20),
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          width: 20,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            color: _hadPasswordSpecialCharacter
+                                ? Colors.green
+                                : Colors.transparent,
+                            border: _hadPasswordSpecialCharacter
+                                ? Border.all(color: Colors.transparent)
+                                : Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(
+                              50,
+                            ),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          ),
                         ),
-                      ),
+                        const Gap(15),
+                        const Text("Contains at least 1 Special characters"),
+                      ],
                     ),
-                    const Text("contanis at least 8 characters"),
-                    const Gap(20),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                          color: _hadPasswordOneNumber
-                              ? Colors.green
-                              : Colors.transparent,
-                          border: _hadPasswordOneNumber
-                              ? Border.all(color: Colors.transparent)
-                              : Border.all(color: Colors.grey.shade400),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: const Center(
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          size: 15,
+                    const Gap(15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Gap(20),
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          width: 20,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            color: _hadPasswordAlphabet
+                                ? Colors.green
+                                : Colors.transparent,
+                            border: _hadPasswordAlphabet
+                                ? Border.all(color: Colors.transparent)
+                                : Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(
+                              50,
+                            ),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          ),
                         ),
-                      ),
+                        const Gap(15),
+                        const Text("Contains UpperCase and LowerCase Alphabet"),
+                      ],
                     ),
-                    const Text("contanis at least 1 numbers"),
+                    const Gap(15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Gap(20),
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          width: 20,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            color: _hadPasswordOneNumber
+                                ? Colors.green
+                                : Colors.transparent,
+                            border: _hadPasswordOneNumber
+                                ? Border.all(color: Colors.transparent)
+                                : Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(
+                              50,
+                            ),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          ),
+                        ),
+                        const Gap(15),
+                        const Text("contanis at least 1 numbers"),
+                      ],
+                    ),
+                    const Gap(15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Gap(20),
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          width: 20,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            color: _isPasswordEightCharacters
+                                ? Colors.green
+                                : Colors.transparent,
+                            border: _isPasswordEightCharacters
+                                ? Border.all(color: Colors.transparent)
+                                : Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(
+                              50,
+                            ),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          ),
+                        ),
+                        const Gap(15),
+                        const Text("Contains at least 8 characters"),
+                      ],
+                    ),
                     const Gap(20),
                     GestureDetector(
                       onTap: () {
