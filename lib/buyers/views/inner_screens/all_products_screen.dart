@@ -35,22 +35,23 @@ class AllProductsScreen extends StatelessWidget {
         stream: _productsStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong');
+            return const Text('Something went wrong');
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
           return GridView.builder(
             itemCount: snapshot.data!.docs.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 200 / 300),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 200 / 300,
+            ),
             itemBuilder: (context, index) {
               final productData = snapshot.data!.docs[index];
               return GestureDetector(
@@ -85,13 +86,13 @@ class AllProductsScreen extends StatelessWidget {
                       ),
                       Text(
                         productData['productName'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),
                       Text(
                         "₹ " + productData['productPrice'].toStringAsFixed(2),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 20,
                             color: FlexColor.mandyRedLightPrimary),
                       ),
