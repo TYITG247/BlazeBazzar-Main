@@ -18,7 +18,8 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('sellers');
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('sellers');
     return FutureBuilder<DocumentSnapshot>(
       future: users.doc(_auth.currentUser!.uid).get(),
       builder:
@@ -33,7 +34,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
 
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
-          snapshot.data!.data() as Map<String, dynamic>;
+              snapshot.data!.data() as Map<String, dynamic>;
           return Scaffold(
             appBar: AppBar(
               elevation: 1,
@@ -139,14 +140,12 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                   ListTile(
                     onTap: () async {
                       await _auth.signOut().whenComplete(
-                            () {
-                          Navigator.push(
-                            context,
+                        () {
+                          Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                              builder: (context) {
-                                return SwitchScreen();
-                              },
+                              builder: (context) => const SwitchScreen(),
                             ),
+                            (Route route) => false,
                           );
                         },
                       );

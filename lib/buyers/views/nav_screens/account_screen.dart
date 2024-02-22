@@ -19,6 +19,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     CollectionReference users = FirebaseFirestore.instance.collection('buyers');
     return _auth.currentUser == null
         ? Scaffold(
@@ -205,139 +206,141 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     centerTitle: true,
                   ),
-                  body: Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Column(
-                      children: [
-                        Gap(25),
-                        Center(
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundColor:
-                                FlexColor.mandyRedLightPrimaryContainer,
-                            child: Center(
-                              child: Text(
-                                '${data['fullName'][0]}'.capitalize,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 54,
+                  body: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Column(
+                        children: [
+                          Gap(25),
+                          Center(
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundColor:
+                                  FlexColor.mandyRedLightPrimaryContainer,
+                              child: Center(
+                                child: Text(
+                                  '${data['fullName'][0]}'.capitalize,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 54,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        Gap(15),
-                        Text(
-                          data['fullName'],
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          data['email'],
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.w300),
-                        ),
-                        Gap(10),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return EditProfileScreen(
-                                    userData: data,
+                          Gap(15),
+                          Text(
+                            data['fullName'],
+                            style: const TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            data['email'],
+                            style: const TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.w300),
+                          ),
+                          const Gap(10),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return EditProfileScreen(
+                                      userData: data,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width - 250,
+                              decoration: BoxDecoration(
+                                color: FlexColor.mandyRedLightPrimaryContainer,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "Edit Profile",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Gap(15),
+                          const Divider(
+                            thickness: 1,
+                            color: Colors.grey,
+                          ),
+                          const Gap(15),
+                          const ListTile(
+                            leading: Icon(Icons.settings),
+                            title: Text(
+                              "Settings",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                          const ListTile(
+                            leading: Icon(CupertinoIcons.phone_solid),
+                            title: Text(
+                              "Phone",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                          const ListTile(
+                            leading: Icon(CupertinoIcons.cart_fill),
+                            title: Text(
+                              "Cart",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return OrderScreen();
+                                  },
+                                ),
+                              );
+                            },
+                            leading: const Icon(CupertinoIcons.doc_text_fill),
+                            title: const Text(
+                              "Orders",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                          ListTile(
+                            onTap: () async {
+                              await _auth.signOut().whenComplete(
+                                () {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                      builder: (context) => const SwitchScreen(),
+                                    ),
+                                    (Route route) => false,
                                   );
                                 },
-                              ),
-                            );
-                          },
-                          child: Container(
-                            height: 40,
-                            width: MediaQuery.of(context).size.width - 250,
-                            decoration: BoxDecoration(
-                              color: FlexColor.mandyRedLightPrimaryContainer,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "Edit Profile",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white),
-                              ),
+                              );
+                            },
+                            leading: const Icon(Icons.logout_rounded),
+                            title: const Text(
+                              "LogOut",
+                              style: TextStyle(fontSize: 20),
                             ),
                           ),
-                        ),
-                        Gap(15),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey,
-                        ),
-                        Gap(15),
-                        ListTile(
-                          leading: Icon(Icons.settings),
-                          title: Text(
-                            "Settings",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        ListTile(
-                          leading: Icon(CupertinoIcons.phone_solid),
-                          title: Text(
-                            "Phone",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        ListTile(
-                          leading: Icon(CupertinoIcons.cart_fill),
-                          title: Text(
-                            "Cart",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return OrderScreen();
-                                },
-                              ),
-                            );
-                          },
-                          leading: Icon(CupertinoIcons.doc_text_fill),
-                          title: Text(
-                            "Orders",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        ListTile(
-                          onTap: () async {
-                            await _auth.signOut().whenComplete(
-                              () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return SwitchScreen();
-                                    },
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          leading: Icon(Icons.logout_rounded),
-                          title: Text(
-                            "LogOut",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
               }
-              return Center(child: CircularProgressIndicator());
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             },
           );
   }

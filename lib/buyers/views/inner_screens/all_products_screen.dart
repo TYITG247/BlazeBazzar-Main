@@ -1,6 +1,7 @@
 import 'package:blazebazzar/buyers/views/product_deatil/product_detail_screen.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AllProductsScreen extends StatelessWidget {
   final dynamic categoryData;
@@ -12,6 +13,7 @@ class AllProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
     Size screenSize = MediaQuery.of(context).size;
     final Stream<QuerySnapshot> _productsStream = FirebaseFirestore.instance
         .collection('products')
