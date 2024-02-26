@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/widgets/payment_type.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -16,6 +17,23 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
+  bool onlinePayment = true;
+  String? paymentType;
+  Widget _paymentTypeWidget() {
+    return Switch(
+      // This bool value toggles the switch.
+      value: onlinePayment,
+      activeColor: Colors.red,
+      onChanged: (bool value) {
+        if(onlinePayment == true){
+          paymentType = "Cash on Delivery";
+        } else if (onlinePayment == false){
+          paymentType = "Online Payment";
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final CartProvider _cartProvider = Provider.of<CartProvider>(context);
@@ -130,68 +148,84 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   )
                 : Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: InkWell(
-                      onTap: () {
-                        _cartProvider.getCartItem.forEach(
-                          (key, item) {
-                            EasyLoading.show(status: "Placing Order");
-                            final orderId = Uuid().v4();
-                            _firestore.collection('orders').doc(orderId).set(
-                              {
-                                'orderId': orderId,
-                                'sellerId': item.sellerId,
-                                'email': data['email'],
-                                'phone': data['phone'],
-                                'address': data['address'],
-                                'buyerID': data['buyerID'],
-                                'fullName': data['fullName'],
-                                'productName': item.productName,
-                                'productPrice': item.price,
-                                'productId': item.productId,
-                                'productImage': item.imageUrl,
-                                'quantity': item.quantity,
-                                'productSize': item.productSize,
-                                'scheduleDate': item.scheduleDate,
-                                'orderDate': DateTime.now(),
-                                'accepted': false,
-                              },
-                            ).whenComplete(
-                              () {
-                                setState(() {
-                                  _cartProvider.getCartItem.clear();
-                                });
-                                EasyLoading.dismiss();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return MainScreen();
+                    child: SizedBox(
+                      height: 100,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Cash on Delivery"),
+                              Gap(10),
+                              _paymentTypeWidget(),
+                            ],
+                          ),
+                          InkWell(
+                            onTap: () {
+                              _cartProvider.getCartItem.forEach(
+                                (key, item) {
+                                  EasyLoading.show(status: "Placing Order");
+                                  final orderId = const Uuid().v4();
+                                  _firestore.collection('orders').doc(orderId).set(
+                                    {
+                                      'orderId': orderId,
+                                      'sellerId': item.sellerId,
+                                      'email': data['email'],
+                                      'phone': data['phone'],
+                                      'address': data['address'],
+                                      'buyerID': data['buyerID'],
+                                      'fullName': data['fullName'],
+                                      'productName': item.productName,
+                                      'productPrice': item.price,
+                                      'productId': item.productId,
+                                      'productImage': item.imageUrl,
+                                      'quantity': item.quantity,
+                                      'productSize': item.productSize,
+                                      'scheduleDate': item.scheduleDate,
+                                      'orderDate': DateTime.now(),
+                                      'paymentType': 'Cash on Delivery',
+                                      'accepted': false,
                                     },
+                                  ).whenComplete(
+                                    () {
+                                      setState(() {
+                                        _cartProvider.getCartItem.clear();
+                                      });
+                                      EasyLoading.dismiss();
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return MainScreen();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            child: Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width - 100,
+                              decoration: BoxDecoration(
+                                color: FlexColor.mandyRedLightPrimary,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Place Order",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    letterSpacing: 4,
                                   ),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                      child: Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width - 100,
-                        decoration: BoxDecoration(
-                          color: FlexColor.mandyRedLightPrimary,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Place Order",
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              letterSpacing: 4,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),

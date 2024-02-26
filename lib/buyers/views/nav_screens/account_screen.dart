@@ -1,6 +1,7 @@
 import 'package:blazebazzar/buyers/views/authentication/login_screen.dart';
 import 'package:blazebazzar/buyers/views/inner_screens/edit_profile.dart';
 import 'package:blazebazzar/buyers/views/inner_screens/order_screen.dart';
+import 'package:blazebazzar/buyers/views/nav_screens/cart_screen.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 import 'package:blazebazzar/connector_screen/switch_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -275,21 +276,24 @@ class _AccountScreenState extends State<AccountScreen> {
                             color: Colors.grey,
                           ),
                           const Gap(15),
-                          const ListTile(
-                            leading: Icon(Icons.settings),
-                            title: Text(
-                              "Settings",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                          const ListTile(
-                            leading: Icon(CupertinoIcons.phone_solid),
-                            title: Text(
-                              "Phone",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                          const ListTile(
+                          // const ListTile(
+                          //   leading: Icon(Icons.settings),
+                          //   title: Text(
+                          //     "Settings",
+                          //     style: TextStyle(fontSize: 20),
+                          //   ),
+                          // ),
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const CartScreen();
+                                  },
+                                ),
+                              );
+                            },
                             leading: Icon(CupertinoIcons.cart_fill),
                             title: Text(
                               "Cart",

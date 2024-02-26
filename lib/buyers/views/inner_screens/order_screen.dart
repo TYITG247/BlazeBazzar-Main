@@ -114,6 +114,16 @@ class OrderScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            Row(
+                              children: [
+                                Text(
+                                  document['paymentType'],
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
                             document['accepted'] == true
                                 ? Row(
                                     children: [
