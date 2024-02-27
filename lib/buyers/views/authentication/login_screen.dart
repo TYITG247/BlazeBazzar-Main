@@ -2,6 +2,7 @@ import 'package:blazebazzar/buyers/controllers/authentication_controller.dart';
 import 'package:blazebazzar/buyers/views/authentication/register_screen.dart';
 import 'package:blazebazzar/buyers/views/main_screen.dart';
 import 'package:blazebazzar/utils/show_snackbar.dart';
+import 'package:blazebazzar/utils/user_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:blazebazzar/config/app_ui.dart';
 
@@ -63,6 +64,14 @@ class _LoginScreenState extends State<LoginScreen> {
           : const Icon(Icons.visibility_rounded),
       color: Colors.grey,
     );
+  }
+
+  @override
+  void initState() {
+
+    super.initState();
+    email = UserPreferences.getEmail() ?? "";
+    password = UserPreferences.getPassword() ?? "";
   }
 
   @override
@@ -174,7 +183,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const Gap(20),
                     InkWell(
-                      onTap: () {
+                      onTap: () async {
+                        await UserPreferences.setEmail(email);
+                        await UserPreferences.setPassword(password);
                         _loginUser();
                       },
                       child: Container(

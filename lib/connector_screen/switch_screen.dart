@@ -43,7 +43,7 @@ class SwitchScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(left: 10, top: 2),
                         child: Text(
-                          "Choose what To Be?",
+                          "Do you want to Buy or Sell?",
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 20,

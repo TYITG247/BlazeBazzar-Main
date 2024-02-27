@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'package:blazebazzar/connector_screen/switch_screen.dart';
 import 'package:blazebazzar/providers/cart_provider.dart';
 import 'package:blazebazzar/providers/product_provider.dart';
 import 'package:blazebazzar/buyers/views/authentication/login_screen.dart';
+import 'package:blazebazzar/utils/user_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'config/app_ui.dart';
@@ -16,10 +19,10 @@ void main() async {
         runApp(
           MultiProvider(
             providers: [
-              ChangeNotifierProvider(create: (_){
+              ChangeNotifierProvider(create: (_) {
                 return ProductProvider();
               }),
-              ChangeNotifierProvider(create: (_){
+              ChangeNotifierProvider(create: (_) {
                 return CartProvider();
               }),
             ],
@@ -34,19 +37,17 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'BlazeBazzar',
-        debugShowCheckedModeBanner: false,
-        theme: CustomLightTheme(),
-        // darkTheme: CustomDarkTheme(),
-        // themeMode: ThemeMode.system,
-        home: LoginScreen(),
+      title: 'BlazeBazzar',
+      debugShowCheckedModeBanner: false,
+      theme: CustomLightTheme(),
+      // darkTheme: CustomDarkTheme(),
+      // themeMode: ThemeMode.system,
+      home: SwitchScreen(),
       builder: EasyLoading.init(),
-        );
+    );
   }
 }
 
@@ -112,6 +113,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _setup() async {
     WidgetsFlutterBinding.ensureInitialized();
+
     if (Platform.isAndroid) {
       await Firebase.initializeApp(
         options: const FirebaseOptions(
@@ -125,5 +127,10 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       await Firebase.initializeApp();
     }
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    await UserPreferences.init();
   }
 }

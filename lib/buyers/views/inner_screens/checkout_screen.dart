@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:blazebazzar/buyers/views/nav_screens/widgets/payment_type.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -25,9 +25,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       value: onlinePayment,
       activeColor: Colors.red,
       onChanged: (bool value) {
-        if(onlinePayment == true){
+        if (onlinePayment == true) {
           paymentType = "Cash on Delivery";
-        } else if (onlinePayment == false){
+        } else if (onlinePayment == false) {
           paymentType = "Online Payment";
         }
       },
@@ -134,7 +134,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return EditProfileScreen(userData: data,);
+                              return EditProfileScreen(
+                                userData: data,
+                              );
                             },
                           ),
                         ).whenComplete(() {
@@ -162,11 +164,84 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                           InkWell(
                             onTap: () {
+                              // _cartProvider.getCartItem.forEach(
+                              //   (key, item) {
+                              //     double amount =
+                              //         item.productQuantity * item.price;
+                              //     Razorpay razorpay = Razorpay();
+                              //     var options = {
+                              //       'key': 'rzp_test_1DP5mmOlF5G5ag',
+                              //       'amount': amount * 100,
+                              //       'name': item.sellerId,
+                              //       'description': item.productName,
+                              //       'retry': {'enabled': true, 'max_count': 2},
+                              //       'send_sms_hash': true,
+                              //       'prefill': {
+                              //         'contact': '8888888888',
+                              //         'email': 'test@razorpay.com'
+                              //       },
+                              //       'external': {
+                              //         'wallets': ['paytm']
+                              //       }
+                              //     };
+                              //     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
+                              //         handlePaymentErrorResponse);
+                              //     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+                              //         handlePaymentSuccessResponse);
+                              //     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
+                              //         handleExternalWalletSelected);
+                              //     razorpay.open(options);
+                              //     EasyLoading.show(status: "Placing Order");
+                              //     final orderId = const Uuid().v4();
+                              //     _firestore
+                              //         .collection('orders')
+                              //         .doc(orderId)
+                              //         .set(
+                              //       {
+                              //         'orderId': orderId,
+                              //         'sellerId': item.sellerId,
+                              //         'email': data['email'],
+                              //         'phone': data['phone'],
+                              //         'address': data['address'],
+                              //         'buyerID': data['buyerID'],
+                              //         'fullName': data['fullName'],
+                              //         'productName': item.productName,
+                              //         'productPrice': item.price,
+                              //         'productId': item.productId,
+                              //         'productImage': item.imageUrl,
+                              //         'quantity': item.quantity,
+                              //         'productSize': item.productSize,
+                              //         'scheduleDate': item.scheduleDate,
+                              //         'orderDate': DateTime.now(),
+                              //         'paymentType': 'Cash on Delivery',
+                              //         'accepted': false,
+                              //       },
+                              //     ).whenComplete(
+                              //           () {
+                              //         setState(() {
+                              //           _cartProvider.getCartItem.clear();
+                              //         });
+                              //         EasyLoading.dismiss();
+                              //         Navigator.pushReplacement(
+                              //           context,
+                              //           MaterialPageRoute(
+                              //             builder: (context) {
+                              //               return MainScreen();
+                              //             },
+                              //           ),
+                              //         );
+                              //       },
+                              //     );
+                              //   },
+                              // );
                               _cartProvider.getCartItem.forEach(
                                 (key, item) {
                                   EasyLoading.show(status: "Placing Order");
                                   final orderId = const Uuid().v4();
-                                  _firestore.collection('orders').doc(orderId).set(
+                                  _firestore
+                                      .collection('orders')
+                                      .doc(orderId)
+                                      .set(
                                     {
                                       'orderId': orderId,
                                       'sellerId': item.sellerId,
@@ -231,7 +306,55 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
           );
         }
-        return Text("loading");
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  void handlePaymentErrorResponse(PaymentFailureResponse response) {
+    /*
+    * PaymentFailureResponse contains three values:
+    * 1. Error Code
+    * 2. Error Description
+    * 3. Metadata
+    * */
+    showAlertDialog(context, "Payment Failed",
+        "Code: ${response.code}\nDescription: ${response.message}\nMetadata:${response.error.toString()}");
+  }
+
+  void handlePaymentSuccessResponse(PaymentSuccessResponse response) {
+    /*
+    * Payment Success Response contains three values:
+    * 1. Order ID
+    * 2. Payment ID
+    * 3. Signature
+    * */
+    print(response.data.toString());
+    showAlertDialog(
+        context, "Payment Successful", "Payment ID: ${response.paymentId}");
+  }
+
+  void handleExternalWalletSelected(ExternalWalletResponse response) {
+    showAlertDialog(
+        context, "External Wallet Selected", "${response.walletName}");
+  }
+
+  void showAlertDialog(BuildContext context, String title, String message) {
+    // set up the buttons
+    Widget continueButton = ElevatedButton(
+      child: const Text("Continue"),
+      onPressed: () {},
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }

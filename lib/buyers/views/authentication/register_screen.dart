@@ -3,6 +3,7 @@ import 'package:blazebazzar/buyers/views/authentication/login_screen.dart';
 import 'package:blazebazzar/utils/show_snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:blazebazzar/config/app_ui.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class BuyerRegisterScreen extends StatefulWidget {
   @override
@@ -38,6 +39,12 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
           _formkey.currentState!.reset();
           _isLoading = false;
         });
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          ),
+              (Route route) => false,
+        );
       });
       return showSnack(
           context, "Congratulations, Account Successfully Created");
@@ -218,7 +225,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
                           left: 20, top: 8, right: 20, bottom: 8),
                       child: TextFormField(
                         obscureText: _isSecurePassword,
-                        onChanged: (value){
+                        onChanged: (value) {
                           onPasswordChanged(value);
                           password = value;
                         },
