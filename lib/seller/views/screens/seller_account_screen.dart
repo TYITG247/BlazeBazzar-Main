@@ -3,8 +3,6 @@ import 'package:blazebazzar/connector_screen/switch_screen.dart';
 import 'package:blazebazzar/seller/views/authentication/seller_authentication_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class SellerAccountScreen extends StatefulWidget {
   const SellerAccountScreen({super.key});
@@ -109,34 +107,34 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                     color: Colors.grey,
                   ),
                   Gap(15),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text(
-                      "Settings",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(CupertinoIcons.phone_solid),
-                    title: Text(
-                      "Phone",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(CupertinoIcons.cart_fill),
-                    title: Text(
-                      "Cart",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(CupertinoIcons.doc_text_fill),
-                    title: Text(
-                      "Orders",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
+                  // ListTile(
+                  //   leading: Icon(Icons.settings),
+                  //   title: Text(
+                  //     "Settings",
+                  //     style: TextStyle(fontSize: 20),
+                  //   ),
+                  // ),
+                  // ListTile(
+                  //   leading: Icon(CupertinoIcons.phone_solid),
+                  //   title: Text(
+                  //     "Phone",
+                  //     style: TextStyle(fontSize: 20),
+                  //   ),
+                  // ),
+                  // ListTile(
+                  //   leading: Icon(CupertinoIcons.cart_fill),
+                  //   title: Text(
+                  //     "Cart",
+                  //     style: TextStyle(fontSize: 20),
+                  //   ),
+                  // ),
+                  // ListTile(
+                  //   leading: Icon(CupertinoIcons.doc_text_fill),
+                  //   title: Text(
+                  //     "Orders",
+                  //     style: TextStyle(fontSize: 20),
+                  //   ),
+                  // ),
                   ListTile(
                     onTap: () async {
                       await _auth.signOut().whenComplete(
@@ -150,10 +148,14 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                         },
                       );
                     },
-                    leading: Icon(Icons.logout_rounded),
+                    leading: Icon(
+                      Icons.logout_rounded,
+                    ),
                     title: Text(
                       "LogOut",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ],

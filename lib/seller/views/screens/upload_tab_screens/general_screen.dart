@@ -172,6 +172,7 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
                     ),
                 ],
               ),
+              Gap(30),
             ],
           ),
         ),

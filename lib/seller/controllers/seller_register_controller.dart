@@ -45,7 +45,7 @@ class SellerController {
             'cityValue': cityValue,
             'taxRegistered': taxRegistered,
             'taxNumber': taxNumber,
-            'approved': false,
+            'approved': true,
             'sellerId': _auth.currentUser!.uid,
           },
         );
