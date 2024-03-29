@@ -5,15 +5,6 @@ import 'package:image_picker/image_picker.dart';
 class SellerController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // pickStoreImage(ImageSource source) async {
-  //   final ImagePicker _imagePicker = ImagePicker();
-  //   XFile? _file = await _imagePicker.pickImage(source: source);
-  //   if (_file != null) {
-  //     await _file.readAsBytes();
-  //   } else {
-  //     print("No Image Selected");
-  //   }
-  // }
 
   Future<String> registerSeller(
     String businessName,
