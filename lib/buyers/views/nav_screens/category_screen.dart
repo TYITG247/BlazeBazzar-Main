@@ -68,6 +68,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ),
                     Text(
                       categoryData['categoryName'],
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,
                       ),

@@ -1,9 +1,12 @@
 import 'package:blazebazzar/config/app_ui.dart';
+import 'package:blazebazzar/utils/generateInvoice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
 class OrderScreen extends StatelessWidget {
+  const OrderScreen({super.key});
+
   String formattedDate(date) {
     final outputDateFormat = DateFormat("dd-MM-yyyy");
     final outputDate = outputDateFormat.format(date);
@@ -12,14 +15,14 @@ class OrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    final Stream<QuerySnapshot> _ordersStream = FirebaseFirestore.instance
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final Stream<QuerySnapshot> ordersStream = FirebaseFirestore.instance
         .collection('orders')
-        .where('buyerID', isEqualTo: _auth.currentUser!.uid)
+        .where('buyerID', isEqualTo: auth.currentUser!.uid)
         .snapshots();
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "My Orders",
           style: TextStyle(
             fontSize: 24,
@@ -29,14 +32,14 @@ class OrderScreen extends StatelessWidget {
         elevation: 5,
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: _ordersStream,
+        stream: ordersStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong');
+            return const Text('Something went wrong');
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           return ListView(
@@ -48,23 +51,23 @@ class OrderScreen extends StatelessWidget {
                       backgroundColor: Colors.white,
                       radius: 14,
                       child: document['accepted'] == true
-                          ? Icon(
+                          ? const Icon(
                               Icons.delivery_dining_rounded,
                               color: FlexColor.mandyRedLightPrimary,
                             )
-                          : Icon(
+                          : const Icon(
                               Icons.access_time_filled_rounded,
                               color: FlexColor.mandyRedLightPrimary,
                             ),
                     ),
                     title: document['accepted'] == true
-                        ? Text(
+                        ? const Text(
                             "Accepted",
                             style: TextStyle(
                               color: FlexColor.greenLightPrimary,
                             ),
                           )
-                        : Text(
+                        : const Text(
                             "Pending",
                             style: TextStyle(
                               color: FlexColor.redLightPrimary,
@@ -77,14 +80,14 @@ class OrderScreen extends StatelessWidget {
                       formattedDate(
                         document['orderDate'].toDate(),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: FlexColor.blueLightPrimary,
                       ),
                     ),
                   ),
                   ExpansionTile(
-                    title: Text("Order Details"),
-                    subtitle: Text("View Orders"),
+                    title: const Text("Order Details"),
+                    subtitle: const Text("View Orders"),
                     children: [
                       ListTile(
                         leading: CircleAvatar(
@@ -100,15 +103,15 @@ class OrderScreen extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Text(
+                                const Text(
                                   "Quantity",
                                   style: TextStyle(
                                     fontSize: 16,
                                   ),
                                 ),
                                 Text(
-                                  " : " + document['quantity'].toString(),
-                                  style: TextStyle(
+                                  " : ${document['quantity']}",
+                                  style: const TextStyle(
                                     fontSize: 16,
                                   ),
                                 ),
@@ -118,7 +121,7 @@ class OrderScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   document['paymentType'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                   ),
                                 ),
@@ -127,20 +130,19 @@ class OrderScreen extends StatelessWidget {
                             document['accepted'] == true
                                 ? Row(
                                     children: [
-                                      Text("Schedule Delivery Date"),
+                                      const Text("Schedule Delivery Date"),
                                       Text(
-                                        " : " +
-                                            formattedDate(
-                                              document['scheduleDate'].toDate(),
-                                            ),
+                                        " : ${formattedDate(
+                                          document['scheduleDate'].toDate(),
+                                        )}",
                                       ),
                                     ],
                                   )
-                                : Text(
+                                : const Text(
                                     "",
                                   ),
                             ListTile(
-                              title: Text(
+                              title: const Text(
                                 "Buyer Details",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -157,11 +159,35 @@ class OrderScreen extends StatelessWidget {
                                     document['email'],
                                   ),
                                   Text(
-                                    document['address'],
+                                    document['address'] ?? "",
                                   )
                                 ],
                               ),
                             ),
+                            MaterialButton(
+                              color: Theme.of(context).primaryColor,
+                              onPressed: () {
+                                generateInvoice(
+                                  InvoiceData(
+                                    buyerName: document['fullName'],
+                                    items: [
+                                      InvoiceItem(
+                                        itemName: document['productName'],
+                                        quantity: document['quantity'],
+                                        price: document['productPrice'],
+                                      )
+                                    ],
+                                    totalAmount: document['productPrice'],
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                "Download Invoice",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),

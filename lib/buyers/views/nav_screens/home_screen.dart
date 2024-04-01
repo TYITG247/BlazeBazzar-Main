@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const WelcomeText(),
             const Gap(10),
             BannerWidget(),
-            CategoryText(),
+            const CategoryText(),
           ],
         ),
       ),

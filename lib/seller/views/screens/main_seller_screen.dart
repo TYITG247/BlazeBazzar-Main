@@ -20,11 +20,11 @@ class _MainSellerScreenState extends State<MainSellerScreen> {
   int _pageIndex = 0;
 
   final List<Widget> _pages = [
-    EarningScreen(),
+    const EarningScreen(),
     UploadScreen(),
-    EditProductScreen(),
+    const EditProductScreen(),
     SellerOrderScreen(),
-    SellerAccountScreen(),
+    const SellerAccountScreen(),
   ];
 
   @override

@@ -17,46 +17,77 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  bool onlinePayment = true;
+  final Razorpay _razorpay = Razorpay(); // Instance of Razorpay
+  final razorPayKey = "rzp_test_mJAguCPXYxZrA5";
+  final razorPaySecret = "GUU0i1hSIfe1bTTipYBcMaFg";
+  bool codPayment = true;
   String? paymentType;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // To handle different event with previous functions
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Do something when payment succeeds
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet is selected
+  }
+
   Widget _paymentTypeWidget() {
     return Switch(
       // This bool value toggles the switch.
-      value: onlinePayment,
+      value: codPayment,
       activeColor: Colors.red,
       onChanged: (bool value) {
-        if (onlinePayment == true) {
+        if (codPayment == false) {
           paymentType = "Cash on Delivery";
-        } else if (onlinePayment == false) {
+          codPayment = true;
+        } else if (codPayment == true) {
           paymentType = "Online Payment";
+          codPayment = false;
         }
+        setState(() {});
+        print(paymentType);
+        print(codPayment);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final CartProvider _cartProvider = Provider.of<CartProvider>(context);
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    final CartProvider cartProvider = Provider.of<CartProvider>(context);
     CollectionReference users = FirebaseFirestore.instance.collection('buyers');
     return FutureBuilder<DocumentSnapshot>(
       future: users.doc(FirebaseAuth.instance.currentUser!.uid).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text("Something went wrong");
+          return const Text("Something went wrong");
         }
 
         if (snapshot.hasData && !snapshot.data!.exists) {
-          return Text("Document does not exist");
+          return const Text("Document does not exist");
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
+          snapshot.data!.data() as Map<String, dynamic>;
           return Scaffold(
             appBar: AppBar(
-              title: Text(
+              title: const Text(
                 "Checkout",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -65,10 +96,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             body: ListView.builder(
               shrinkWrap: true,
-              itemCount: _cartProvider.getCartItem.length,
+              itemCount: cartProvider.getCartItem.length,
               itemBuilder: (context, index) {
                 final cartData =
-                    _cartProvider.getCartItem.values.toList()[index];
+                cartProvider.getCartItem.values.toList()[index];
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
@@ -94,15 +125,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               children: [
                                 Text(
                                   cartData.productName,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 5,
                                   ),
                                 ),
                                 Text(
-                                  "₹" + cartData.price.toStringAsFixed(2),
-                                  style: TextStyle(
+                                  "₹${cartData.price.toStringAsFixed(2)}",
+                                  style: const TextStyle(
                                     fontSize: 22,
                                     color: FlexColor.mandyRedLightPrimary,
                                     fontWeight: FontWeight.bold,
@@ -127,183 +158,165 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             bottomSheet: data['address'] == ''
                 ? Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return EditProfileScreen(
-                                userData: data,
-                              );
-                            },
-                          ),
-                        ).whenComplete(() {
-                          Navigator.pop(context);
-                        });
+              padding: const EdgeInsets.all(10.0),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return EditProfileScreen(
+                          userData: data,
+                        );
                       },
-                      child: Text(
-                        "Enter Billing Address",
-                      ),
                     ),
-                  )
+                  ).whenComplete(() {
+                    Navigator.pop(context);
+                  });
+                },
+                child: const Text(
+                  "Enter Billing Address",
+                ),
+              ),
+            )
                 : Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: SizedBox(
-                      height: 100,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Cash on Delivery"),
-                              Gap(10),
-                              _paymentTypeWidget(),
-                            ],
-                          ),
-                          InkWell(
-                            onTap: () {
-                              // _cartProvider.getCartItem.forEach(
-                              //   (key, item) {
-                              //     double amount =
-                              //         item.productQuantity * item.price;
-                              //     Razorpay razorpay = Razorpay();
-                              //     var options = {
-                              //       'key': 'rzp_test_1DP5mmOlF5G5ag',
-                              //       'amount': amount * 100,
-                              //       'name': item.sellerId,
-                              //       'description': item.productName,
-                              //       'retry': {'enabled': true, 'max_count': 2},
-                              //       'send_sms_hash': true,
-                              //       'prefill': {
-                              //         'contact': '8888888888',
-                              //         'email': 'test@razorpay.com'
-                              //       },
-                              //       'external': {
-                              //         'wallets': ['paytm']
-                              //       }
-                              //     };
-                              //     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
-                              //         handlePaymentErrorResponse);
-                              //     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
-                              //         handlePaymentSuccessResponse);
-                              //     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
-                              //         handleExternalWalletSelected);
-                              //     razorpay.open(options);
-                              //     EasyLoading.show(status: "Placing Order");
-                              //     final orderId = const Uuid().v4();
-                              //     _firestore
-                              //         .collection('orders')
-                              //         .doc(orderId)
-                              //         .set(
-                              //       {
-                              //         'orderId': orderId,
-                              //         'sellerId': item.sellerId,
-                              //         'email': data['email'],
-                              //         'phone': data['phone'],
-                              //         'address': data['address'],
-                              //         'buyerID': data['buyerID'],
-                              //         'fullName': data['fullName'],
-                              //         'productName': item.productName,
-                              //         'productPrice': item.price,
-                              //         'productId': item.productId,
-                              //         'productImage': item.imageUrl,
-                              //         'quantity': item.quantity,
-                              //         'productSize': item.productSize,
-                              //         'scheduleDate': item.scheduleDate,
-                              //         'orderDate': DateTime.now(),
-                              //         'paymentType': 'Cash on Delivery',
-                              //         'accepted': false,
-                              //       },
-                              //     ).whenComplete(
-                              //           () {
-                              //         setState(() {
-                              //           _cartProvider.getCartItem.clear();
-                              //         });
-                              //         EasyLoading.dismiss();
-                              //         Navigator.pushReplacement(
-                              //           context,
-                              //           MaterialPageRoute(
-                              //             builder: (context) {
-                              //               return MainScreen();
-                              //             },
-                              //           ),
-                              //         );
-                              //       },
-                              //     );
-                              //   },
-                              // );
-                              _cartProvider.getCartItem.forEach(
-                                (key, item) {
-                                  EasyLoading.show(status: "Placing Order");
-                                  final orderId = const Uuid().v4();
-                                  _firestore
-                                      .collection('orders')
-                                      .doc(orderId)
-                                      .set(
-                                    {
-                                      'orderId': orderId,
-                                      'sellerId': item.sellerId,
-                                      'email': data['email'],
-                                      'phone': data['phone'],
-                                      'address': data['address'],
-                                      'buyerID': data['buyerID'],
-                                      'fullName': data['fullName'],
-                                      'productName': item.productName,
-                                      'productPrice': item.price,
-                                      'productId': item.productId,
-                                      'productImage': item.imageUrl,
-                                      'quantity': item.quantity,
-                                      'productSize': item.productSize,
-                                      'scheduleDate': item.scheduleDate,
-                                      'orderDate': DateTime.now(),
-                                      'paymentType': 'Cash on Delivery',
-                                      'accepted': false,
-                                    },
-                                  ).whenComplete(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                height: 100,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Cash on Delivery"),
+                        const Gap(10),
+                        _paymentTypeWidget(),
+                      ],
+                    ),
+                    InkWell(
+                      onTap: () {
+                        cartProvider.getCartItem.forEach(
+                              (key, item) {
+                            EasyLoading.show(status: "Placing Order");
+
+                            if (codPayment == false) {
+                              var options = {
+                                'key': razorPayKey,
+                                'amount': item.price * 100,
+                                'name': 'Blazebazzar',
+                                'description': 'Description for order',
+                                'timeout': 60,
+                              };
+                              _razorpay.open(options);
+                              final orderId = const Uuid().v4();
+                              firestore
+                                  .collection('orders')
+                                  .doc(orderId)
+                                  .set(
+                                {
+                                  'orderId': orderId,
+                                  'sellerId': item.sellerId,
+                                  'email': data['email'],
+                                  'phone': data['phone'],
+                                  'address': data['address'],
+                                  'buyerID': data['buyerID'],
+                                  'fullName': data['fullName'],
+                                  'productName': item.productName,
+                                  'productPrice': item.price,
+                                  'productId': item.productId,
+                                  'productImage': item.imageUrl,
+                                  'quantity': item.quantity,
+                                  'productSize': item.productSize,
+                                  'scheduleDate': item.scheduleDate,
+                                  'orderDate': DateTime.now(),
+                                  'paymentType': paymentType,
+                                  'accepted': false,
+                                },
+                              ).whenComplete(
                                     () {
-                                      setState(() {
-                                        _cartProvider.getCartItem.clear();
-                                      });
-                                      EasyLoading.dismiss();
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return MainScreen();
-                                          },
-                                        ),
-                                      );
-                                    },
+                                  setState(() {
+                                    cartProvider.getCartItem.clear();
+                                  });
+                                  EasyLoading.dismiss();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return const MainScreen();
+                                      },
+                                    ),
                                   );
                                 },
                               );
-                            },
-                            child: Container(
-                              height: 50,
-                              width: MediaQuery.of(context).size.width - 100,
-                              decoration: BoxDecoration(
-                                color: FlexColor.mandyRedLightPrimary,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Place Order",
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    letterSpacing: 4,
-                                  ),
-                                ),
-                              ),
+                            } else {
+                              final orderId = const Uuid().v4();
+                              firestore
+                                  .collection('orders')
+                                  .doc(orderId)
+                                  .set(
+                                {
+                                  'orderId': orderId,
+                                  'sellerId': item.sellerId,
+                                  'email': data['email'],
+                                  'phone': data['phone'],
+                                  'address': data['address'],
+                                  'buyerID': data['buyerID'],
+                                  'fullName': data['fullName'],
+                                  'productName': item.productName,
+                                  'productPrice': item.price,
+                                  'productId': item.productId,
+                                  'productImage': item.imageUrl,
+                                  'quantity': item.quantity,
+                                  'productSize': item.productSize,
+                                  'scheduleDate': item.scheduleDate,
+                                  'orderDate': DateTime.now(),
+                                  'paymentType': paymentType,
+                                  'accepted': false,
+                                },
+                              ).whenComplete(
+                                    () {
+                                  setState(() {
+                                    cartProvider.getCartItem.clear();
+                                  });
+                                  EasyLoading.dismiss();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return const MainScreen();
+                                      },
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          },
+                        );
+                      },
+                      child: Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width - 100,
+                        decoration: BoxDecoration(
+                          color: FlexColor.mandyRedLightPrimary,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Place Order",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              letterSpacing: 4,
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
+                ),
+              ),
+            ),
           );
         }
         return const Center(child: CircularProgressIndicator());
