@@ -26,9 +26,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // To handle different event with previous functions
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
@@ -48,7 +46,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   Widget _paymentTypeWidget() {
     return Switch(
-      // This bool value toggles the switch.
       value: codPayment,
       activeColor: Colors.red,
       onChanged: (bool value) {
@@ -60,8 +57,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           codPayment = false;
         }
         setState(() {});
-        print(paymentType);
-        print(codPayment);
       },
     );
   }
